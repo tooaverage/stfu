@@ -1,0 +1,29 @@
+# Secrets and local config (this repo will go public)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+secrets/
+credentials*.json
+.dev.vars
+.wrangler/
+.vercel/
+
+# Claude / editor local state
+.claude/settings.local.json
+CLAUDE.local.md
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# Dependencies and builds
+node_modules/
+dist/
+build/
+.next/
+coverage/
+*.log
