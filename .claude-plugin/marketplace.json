@@ -1,0 +1,14 @@
+{
+  "name": "stfu",
+  "owner": {
+    "name": "Jaycee Day"
+  },
+  "description": "Plain-language copywriting skills.",
+  "plugins": [
+    {
+      "name": "stfu",
+      "source": "./",
+      "description": "Short, To-the-point, Friendly, Useful. Makes copy that ships short, plain, grade 6 and free of AI tells."
+    }
+  ]
+}
