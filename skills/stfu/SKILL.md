@@ -7,7 +7,7 @@ description: Use when writing, rewriting or reviewing copy that ships in a websi
 
 Short, To-the-point, Friendly, Useful.
 
-This skill is for words that ship: website pages, product UI, onboarding, docs, notifications. It is not for chat replies or personal messages.
+This skill is for words that ship: website pages, product UI, onboarding, docs, notifications.
 
 ## Before you write
 
@@ -21,7 +21,7 @@ This skill is for words that ship: website pages, product UI, onboarding, docs, 
 
 **2. Grade 6 reading level.** Short, common words. Sentences under about 15 words. One idea per sentence. Use a harder word only when no simpler one says the same thing (for example "typhoon" or "subscription"). Technical docs can set a higher target with `grade: 8` in `.stfu.md`. Run the check script before shipping.
 
-**3. Visual first.** If it can be an icon, badge, table, chart, list or diagram, it is not a paragraph.
+**3. Visual first.** If it can be an icon, badge, table, chart, list or diagram, it is not a paragraph, unless the person asks for prose.
 - Comparisons and data: table or chart.
 - Status or rating: badge or color, with a text label.
 - Steps: numbered list or diagram.
@@ -64,6 +64,15 @@ echo "your draft text" | python3 scripts/check.py -
 It flags dashes, banned words, long sentences and hard sentences, and prints an overall grade. It also reads `.stfu.md`: `grade: N` sets the target, and any rule written as `not "word"` adds that word to the banned list. If the script isn't there, check the same things by hand.
 
 Fix every flag, unless the word is literal or has no simpler swap. The overall grade must pass. Then check by eye: facts match the source, caveats are there, anything that could be a visual is one.
+
+## How to hand it over
+
+The rules apply to your reply too, not just the copy.
+
+- Give the copy first. Nothing before it.
+- Give one version. Give options only when asked.
+- Don't report your process: which checks ran, whether `.stfu.md` exists, what you did by hand. Mention a check only when it found a problem you couldn't fix.
+- After the copy, at most one line: a fact to confirm or a placeholder to fill.
 
 ## House rules (the ratchet)
 
