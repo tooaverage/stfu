@@ -27,3 +27,4 @@ build/
 .next/
 coverage/
 *.log
+evals/results.md
