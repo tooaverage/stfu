@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""stfu checker: flags dashes, banned words and hard-to-read sentences.
+"""stfu checker: flags dashes, all caps, banned words and hard-to-read sentences.
 
 Usage:
   python3 check.py FILE [FILE ...]
@@ -120,6 +120,12 @@ def check(name, raw, target, banned):
             flags += 1
         if EN_DASH in prose or re.search(r"\s--?\s", prose.lstrip(" -*>")):
             print(f"{name}:{i}: dash used as a pause: {line.strip()[:80]}")
+            flags += 1
+        if re.search(r"text-transform\s*:\s*uppercase", prose, flags=re.I):
+            print(f"{name}:{i}: uppercase style: {line.strip()[:80]}")
+            flags += 1
+        elif re.search(r"\b[A-Z]{2,}\b(?:[\s,:!.-]+\b[A-Z]{2,}\b)+", prose):
+            print(f"{name}:{i}: all caps: {line.strip()[:80]}")
             flags += 1
         low = prose.lower()
         for b in banned:

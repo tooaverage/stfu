@@ -68,7 +68,7 @@ main{max-width:1100px;margin:0 auto}h1{font-size:22px;margin:0 0 4px}p.sub{color
 section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:20px}
 h2{font-size:16px;margin:0 0 12px}.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media (max-width:700px){.cols{grid-template-columns:1fr}}
-h3{font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin:0 0 6px}
+h3{font-size:14px;color:var(--muted);margin:0 0 6px}
 .stats{font-size:13px;color:var(--muted);margin-bottom:8px}.after h3{color:var(--good)}
 pre{white-space:pre-wrap;word-wrap:break-word;font:15px/1.55 -apple-system,system-ui,sans-serif;margin:0;border-top:1px solid var(--line);padding-top:10px}
 </style></head><body><main><h1>stfu: before and after</h1>

@@ -45,6 +45,7 @@ This skill is for words that ship: website pages, product UI, onboarding, docs, 
 
 - **Em dashes (the long dash).** Use a comma, colon, full stop or parentheses. Don't swap in an en dash or " - " either.
 - **Words:** honestly, quietly, leverage, streamline, seamless, effortless, unlock, empower, elevate, supercharge, game-changing, revolutionize, robust, cutting-edge, delve, solution (for a product), offering, "workflow" as a noun. These are fine when literal ("Unlock your account").
+- **All caps.** No uppercase text, including small labels and eyebrows styled with `text-transform: uppercase`. Use sentence case. Only use caps when asked, or when the project's design system already does (check its tokens and existing components first). Acronyms like "MB" or "FAQ" are fine.
 - **Setup-punchline hooks.** "Short line. Fragment twist." Write one plain sentence instead.
 - **Neat summary closers.** "That's the power of X." "It's that simple." End on the useful fact.
 - **Tacked-on explaining.** "...which is why this matters." Say it once.
@@ -61,7 +62,7 @@ python3 scripts/check.py path/to/file.md
 echo "your draft text" | python3 scripts/check.py -
 ```
 
-It flags dashes, banned words, long sentences and hard sentences, and prints an overall grade. It also reads `.stfu.md`: `grade: N` sets the target, and any rule written as `not "word"` adds that word to the banned list. If the script isn't there, check the same things by hand.
+It flags dashes, all caps, banned words, long sentences and hard sentences, and prints an overall grade. It also reads `.stfu.md`: `grade: N` sets the target, and any rule written as `not "word"` adds that word to the banned list. If the script isn't there, check the same things by hand.
 
 Fix every flag, unless the word is literal or has no simpler swap. The overall grade must pass. Then check by eye: facts match the source, caveats are there, anything that could be a visual is one.
 
