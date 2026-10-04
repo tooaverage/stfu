@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""stfu checker: flags dashes, all caps, banned words and hard-to-read sentences.
+"""stfu checker: flags dashes, all caps, banned words, vague links, missing alt
+text and hard-to-read sentences.
 
 Usage:
   python3 check.py FILE [FILE ...]
@@ -126,6 +127,13 @@ def check(name, raw, target, banned):
             flags += 1
         elif re.search(r"\b[A-Z]{2,}\b(?:[\s,:!.-]+\b[A-Z]{2,}\b)+", prose):
             print(f"{name}:{i}: all caps: {line.strip()[:80]}")
+            flags += 1
+        vague = r"(?:click here|here|learn more|read more|more|this link|link)"
+        if re.search(r"\[\s*" + vague + r"\s*\]\(", prose, flags=re.I) or re.search(r">\s*" + vague + r"\s*</a>", prose, flags=re.I):
+            print(f"{name}:{i}: vague link text: {line.strip()[:80]}")
+            flags += 1
+        if re.search(r"<img\b(?![^>]*\balt\s*=)[^>]*>", prose, flags=re.I) or re.search(r"!\[\s*\]\(", prose):
+            print(f"{name}:{i}: image with no alt text: {line.strip()[:80]}")
             flags += 1
         low = prose.lower()
         for b in banned:

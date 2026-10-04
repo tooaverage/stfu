@@ -11,7 +11,7 @@ This skill is for words that ship: website pages, product UI, onboarding, docs, 
 
 ## Before you write
 
-1. Look for a `.stfu.md` file at the project root. If it exists, read it. Its rules override everything below except rules 8 and 9.
+1. Look for a `.stfu.md` file at the project root. If it exists, read it. Its rules override everything below except rules 8, 9 and 10.
 2. Get facts from the source (data, code, the person), never from memory.
 3. Ask: does this need words at all? If it can be a visual, make it a visual.
 
@@ -26,6 +26,7 @@ This skill is for words that ship: website pages, product UI, onboarding, docs, 
 - Status or rating: badge or color, with a text label.
 - Steps: numbered list or diagram.
 - Every icon has a visible label or alt text. Use one icon set across the product.
+- Every chart, image or diagram gets one short line of text (about 8 words) with the key fact. It's what search engines, screen readers and skimmers get.
 
 **4. Lead with the answer.** The most useful thing comes first. Detail comes after, if at all.
 
@@ -44,8 +45,16 @@ This skill is for words that ship: website pages, product UI, onboarding, docs, 
 **9. Don't break search.** When editing a live page, keep what it ranks for:
 - Keep the words people search for in the title, H1 and first paragraph. Shorten around them, don't swap them for synonyms.
 - Don't cut a section that answers a question people search for, even if it's long.
-- Keep key facts in real text. A chart or image can add to the text but not replace it.
 - Don't change URLs, slugs or headings other pages link to. Flag them instead.
+
+**10. Works for everyone.** Some people hear the page, zoom it, or read it out of order.
+- Link and button text makes sense on its own: "See pricing", not "Learn more" or "Click here".
+- Never point by color, shape or place alone: not "the green button" or "the chart on the right". Name the thing.
+- Alt text says what the image shows or means, in plain words. Don't start with "Image of". Decorative images get empty alt.
+- Errors say what went wrong and how to fix it, next to the field: "Enter a date after today", not "Invalid input".
+- Form fields have real labels. Placeholder text isn't a label.
+- Emoji don't replace words. Screen readers read their names out loud ("green square").
+- Tables are for data, with a header row. Never for layout.
 
 ## Never write these
 
@@ -68,7 +77,7 @@ python3 <skill folder>/scripts/check.py path/to/file.md
 echo "your draft text" | python3 <skill folder>/scripts/check.py -
 ```
 
-It flags dashes, all caps, banned words, long sentences and hard sentences, and prints an overall grade. It also reads `.stfu.md`: `grade: N` sets the target, and any rule written as `not "word"` adds that word to the banned list. If you can't run it, check the same things by hand.
+It flags dashes, all caps, banned words, vague link text, images with no alt text, long sentences and hard sentences, and prints an overall grade. It also reads `.stfu.md`: `grade: N` sets the target, and any rule written as `not "word"` adds that word to the banned list. If you can't run it, check the same things by hand.
 
 Fix every flag, unless the word is literal or has no simpler swap. The overall grade must pass. Then check by eye: facts match the source, caveats are there, anything that could be a visual is one.
 
