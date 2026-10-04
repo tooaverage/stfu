@@ -55,14 +55,14 @@ This skill is for words that ship: website pages, product UI, onboarding, docs, 
 
 ## Check before shipping
 
-Run the checker on the changed files or on the draft text:
+Run the checker on the changed files or on the draft text. It lives in this skill's own folder (the base directory shown when the skill loads), not in the project, so use the full path:
 
 ```
-python3 scripts/check.py path/to/file.md
-echo "your draft text" | python3 scripts/check.py -
+python3 <skill folder>/scripts/check.py path/to/file.md
+echo "your draft text" | python3 <skill folder>/scripts/check.py -
 ```
 
-It flags dashes, all caps, banned words, long sentences and hard sentences, and prints an overall grade. It also reads `.stfu.md`: `grade: N` sets the target, and any rule written as `not "word"` adds that word to the banned list. If the script isn't there, check the same things by hand.
+It flags dashes, all caps, banned words, long sentences and hard sentences, and prints an overall grade. It also reads `.stfu.md`: `grade: N` sets the target, and any rule written as `not "word"` adds that word to the banned list. If you can't run it, check the same things by hand.
 
 Fix every flag, unless the word is literal or has no simpler swap. The overall grade must pass. Then check by eye: facts match the source, caveats are there, anything that could be a visual is one.
 
