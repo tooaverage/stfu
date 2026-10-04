@@ -55,7 +55,7 @@ Short, To-the-point, Friendly, Useful.
 - **Zero-padded step numbers** ("01", "02", "03"). Use 1, 2, 3, or no numbers if the order doesn't matter.
 - **Eyebrow labels.** The small label above a heading ("Weather score" over "How good is the weather?"). Cut it. The heading does the job.
 - **Colored words in headlines.** One color for the whole headline. No accent-colored or gradient word or line.
-- **Emoji,** including as icons. Screen readers read them out loud ("green square").
+- **Emoji,** including as icons. Screen readers read them out loud ("green square"). Use the project's icon set instead (Lucide, Heroicons, Phosphor or whatever is installed), with a text label. If there's no icon set, drop the emoji and suggest adding one.
 - **Setup-punchline hooks.** "Short line. Fragment twist." Write one plain sentence.
 - **Summary closers.** "It's that simple." End on the useful fact.
 - **Tacked-on explaining.** "...which is why this matters." Say it once.
