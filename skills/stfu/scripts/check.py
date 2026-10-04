@@ -193,7 +193,8 @@ def source_prose(raw):
         if in_code:
             continue
         if i in in_script:
-            text = " ".join(g for m in STRING.finditer(line) for g in m.groups() if g)
+            # Strings only, and not the ${...} code inside template strings.
+            text = " ".join(re.sub(r"\$\{[^}]*\}", " ", g) for m in STRING.finditer(line) for g in m.groups() if g)
         else:
             text = re.sub(r"`[^`]*`", " ", line)
         if text.strip():
