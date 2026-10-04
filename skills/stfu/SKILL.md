@@ -74,16 +74,16 @@ echo "draft text" | python3 <skill folder>/scripts/check.py -
 
 It flags dashes, caps, emoji, hype words, vague links, missing alt text and hard sentences, and prints an overall grade. From `.stfu.md` it reads `grade: N` as the target, and `not "word"` as a banned word. If you can't run it, check by hand.
 
-Fix every flag unless the word is literal or has no simpler swap. The overall grade must pass. Passing is the floor, not the finish.
+Fix every flag unless the word is literal or has no simpler swap. The overall grade must pass.
 
 ## Editing an existing page
 
-Keep the design. Rewrite the content as if the page were new.
+Keep the design: same fonts, colors, layout and components. Change the words and how the content is shown. Go section by section:
 
-1. Draft the page from scratch with these rules, using the facts on the current page. Don't look at the old wording while you draft.
-2. Pour the draft into the existing design: same fonts, colors, spacing and components. Build tables, lists and badges from the styles the page already has.
+1. Cut. Aim for a third fewer words. If a section can't lose any, say why in one line.
+2. Convert. A paragraph of facts, dates, steps or comparisons becomes a table, list or badge, built from styles the page already has.
 3. Fix the never list, including caps and colored words set in the CSS.
-4. Then run the checker. Expect about a third fewer words. If a section barely changed, say why in one line.
+4. Then run the checker. Passing is the floor, not the finish.
 
 Rules 8 and 9 still hold: keep every fact and the search words.
 
