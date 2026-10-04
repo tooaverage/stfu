@@ -6,7 +6,7 @@ Grade the copy once it's written. Each check is pass or fail, never a score, bec
 
 1. The first line of the page and of each section gives the answer, not a setup.
 2. Everything on the must-cover list is still there and still true, either visible or in a "show more".
-3. Nothing is said twice.
+3. No fact is said twice for the same reason. Warnings still sit next to the thing they warn about.
 4. Numbers, names and dates are specific. No "many", "several" or "various".
 5. No sentence could be pasted onto another product's page unchanged.
 6. Every element is inside its word budget in SKILL.md (titles, subs, intros, notes, hints, buttons, tooltips, empty states, errors, paragraphs). Over budget is a fail, even by one word.

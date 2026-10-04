@@ -31,7 +31,7 @@ Every job ends with the checks in [references/evals.md](references/evals.md).
 ## How to write it
 
 1. **Lead with the answer.** The first line of the page, and of each section, says what the reader came for. Setup comes after, if at all.
-2. **Say each thing once.** Repeats are the main reason pages run long. Keep the clearest version and cut the rest.
+2. **Say each thing once.** Repeats are the main reason pages run long. When the same fact does the same job twice, keep the clearest one. A fact can appear twice when it does different jobs: a warning belongs next to the thing it warns about (Golden Week in the May card), even if the dates also sit in a holidays list.
 3. **Stay inside the word budget.** Hard limits work better than "be concise", so every element has one:
 
    | Element | Max |
