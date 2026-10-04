@@ -1,6 +1,6 @@
 ---
 name: stfu
-description: Writes and edits website and product copy so it's short, plain and free of AI tells, with every fact kept. Use whenever someone writes or changes copy that ships (landing pages, UI text, onboarding, error messages, empty states, product emails, help docs), asks to make copy shorter, clearer or "less AI", or asks to audit or review a page's copy, even if they don't name stfu. Not for chat replies, code comments or personal messages.
+description: Writes and edits website and product copy so it's short, plain, visual first and free of AI tells, with every fact kept. Use whenever someone writes or changes copy that ships (landing pages, UI text, onboarding, error messages, empty states, product emails, help docs), asks to make copy shorter, clearer or "less AI", or asks to audit or review a page's copy, even if they don't name stfu. Not for chat replies, code comments or personal messages.
 license: MIT
 metadata:
   author: Jaycee Day
@@ -17,8 +17,8 @@ People skim product copy. Every extra word costs attention, and every AI tell co
 
 Pick the job, and read its file before you do anything else:
 
-- **Writing new copy:** read [references/examples.md](references/examples.md).
-- **Editing, auditing or rebuilding a page that already exists:** read [references/editing.md](references/editing.md). Editing existing text pulls you into small tweaks that barely change the page, and that file has the steps that avoid it.
+- **Writing something new:** visual first, simple copy first. Read [references/examples.md](references/examples.md).
+- **Editing, auditing or rebuilding a page that already exists:** keep its design and change the words. Read [references/editing.md](references/editing.md). Editing existing text pulls you into small tweaks that barely change the page, and that file has the steps that avoid it.
 
 Every job ends with the checks in [references/evals.md](references/evals.md).
 
@@ -31,7 +31,7 @@ Every job ends with the checks in [references/evals.md](references/evals.md).
 ## How to write it
 
 1. **Lead with the answer.** The first line of the page, and of each section, says what the reader came for. Setup comes after, if at all.
-2. **Say each thing once.** Repeats are the main reason pages run long. When the same fact does the same job twice, keep the clearest one. A fact can appear twice when it does different jobs: a warning belongs next to the thing it warns about (Golden Week in the May card), even if the dates also sit in a holidays list.
+2. **Say each thing once.** Repeats are the main reason pages run long. When the same fact does the same job twice, keep the clearest one. A fact can appear twice when it does different jobs: a warning belongs next to the thing it warns about (the late fee beside the due date), even if a fees table lists it too.
 3. **Stay inside the word budget.** Hard limits work better than "be concise", so every element has one:
 
    | Element | Max |
@@ -49,8 +49,16 @@ Every job ends with the checks in [references/evals.md](references/evals.md).
 
    The budget wins. When a fact doesn't fit, give it its own element (a table row, a note, a "More" toggle), or cut it if the page says it somewhere else. Don't stretch the element to hold it.
 
-   One idea per element. A title says what to do or what you get, and on a task screen it starts with a verb ("Name your workspace"). A sub says why, or what happens next, not both. A button is a verb and an object ("Connect GitHub", not "Continue"). Use words a 12-year-old knows, unless the right word is harder ("typhoon"), and write whole sentences: fragments and "Nov" mid-sentence are harder to read, not easier.
-4. **Show it when it has a shape.** Steps someone follows in order become a numbered list (1, 2, 3). Options compared on the same points become a table. A status becomes a badge with a text label. Ordinary notes stay sentences, because a page of bullets reads like a slide deck.
+   One idea per element. A title says what to do or what you get, and on a task screen it starts with a verb ("Name your workspace"). A sub says why, or what happens next, not both. A button is a verb and an object ("Connect GitHub", not "Continue"). Use words a 12-year-old knows, unless the right word is harder ("mortgage"), and write whole sentences: fragments and "Nov" mid-sentence are harder to read, not easier.
+4. **Visual first.** People take in a picture faster than a paragraph, so when content has a shape, show it, and use the room the cut words free up:
+   - Places, or a route between them: a map with a labeled point for each place. A simple drawn map is fine, marked "not to scale".
+   - Numbers that change over time: a chart.
+   - Scores across months or categories: a colored grid.
+   - Options compared on the same points: a table.
+   - Steps someone follows in order: a numbered list (1, 2, 3) or a diagram.
+   - A status: a badge with a text label.
+
+   Pick the most visual form that stays readable. Every visual keeps its facts as text (labels on the points, bars and cells), so screen readers and search still get them. Ordinary notes stay sentences, because a page of bullets reads like a slide deck.
 5. **Be specific.** Real numbers, names and dates instead of "many" or "several". If a sentence could be pasted onto another product's page unchanged, it isn't saying anything: cut it or make it specific.
 6. **Sound like a person.** Contractions, "you", active voice. Plain words instead of idioms, since "move the needle" means nothing to a lot of readers. Reuse the terms on nearby screens and sections, and don't invent new metaphors.
 7. **Invite, don't push.** Buttons and links say what happens ("See pricing", not "Learn more"). No fake urgency.
@@ -74,6 +82,8 @@ Readers spot these at a glance and stop trusting the page:
 
 If the brand already uses caps, emoji or colored words, or the person asks for them, follow the brand.
 
+These rules are about words, not the look. A page without eyebrows or colored words can still have bold type, color, charts and photos, so don't make the design plainer to match.
+
 ## Check your work
 
 1. Cut pass: delete every sentence the page works without, then every word each sentence works without. Count the words in each element against the budget.
@@ -87,16 +97,16 @@ When someone edits your copy or says a line sounds off, the edit is the data:
 
 1. Compare their version with yours word by word, and say in 1 to 3 lines what changed. Don't defend the original.
 2. A cut is final. Never bring a cut line back in other words. If it solved a real problem, name the problem and offer a different fix.
-3. When the same kind of change happens twice, add one rule to `.stfu.md` with the date and their exact words. Write word swaps as `Say "trip", not "journey"` so the checker catches them.
+3. When the same kind of change happens twice, add one rule to `.stfu.md` with the date and their exact words. Write word swaps as `Say "sign in", not "log in"` so the checker catches them.
 4. Fix the other places the rule applies.
 
 ## Examples
 
 [references/examples.md](references/examples.md) has before and after pairs from real pages. One of them:
 
-Before: "Whether you're planning a spring getaway or an autumn adventure, our comprehensive guides leverage monthly weather data to help you seamlessly identify the optimal time to visit. It's that simple."
+Before: "Whether you're a solo freelancer or a growing studio, our powerful platform helps you seamlessly manage invoices, track payments and get paid faster. It's that simple."
 
-After: "Find the best month to go. Each guide shows the weather, month by month, for a real city." A 12-month chart replaces the rest.
+After: "Send invoices and track who's paid."
 
 ## Troubleshooting
 

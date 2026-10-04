@@ -15,10 +15,10 @@ Starting from existing text makes you cautious: you keep its structure and nudge
 
    ```
    Hero
-   Title · 13 → 8 words
-   Before: "Go from late March to May, or in November."
-   After: "Best time to visit Japan: late March to May, or November"
-   Why: puts the search phrase in the headline.
+   Title · 9 → 5 words
+   Before: "Everything you need to manage your team's time off"
+   After: "Track your team's time off"
+   Why: says what it does and keeps the words people search for.
    ```
 9. If the real problem is the structure (sections that repeat each other, a grid of cards that should be one table), say so in one line and offer a rebuild.
 

@@ -185,6 +185,8 @@ def prose_flags(name, lines, banned):
 
 def source_prose(raw):
     """The readable text in a source file, line by line. In <script> only the strings count."""
+    # CSS isn't prose: blank out <style> blocks but keep the line numbers.
+    raw = re.sub(r"<style[^>]*>.*?</style>", lambda m: "\n" * m.group(0).count("\n"), raw, flags=re.S | re.I)
     in_script, in_code, out = script_lines(raw), False, []
     for i, line in enumerate(raw.splitlines(), 1):
         if line.lstrip().startswith("```"):
