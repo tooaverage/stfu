@@ -81,10 +81,11 @@ Fix every flag unless the word is literal or has no simpler swap. The overall gr
 Keep the design: same fonts, colors, layout and components. Change the words and how the content is shown.
 
 1. Save a copy of the page before you touch it.
-2. Cut. At least a third of the words go.
-3. Convert. A paragraph of facts, dates, steps or comparisons becomes a table, list or badge, built from styles the page already has.
-4. Fix the never list, including caps and colored words set in the CSS.
-5. Run the checker with the copy: `check.py --before <copy> <page>`. It fails if less than 30% was cut, or if any block runs over 20 words. Keep cutting until it passes.
+2. Shrink every note to one line. A note in a card, row, list item or under a heading is about 8 words, never over 15. Section intros are one short sentence, or nothing.
+3. Use labels, not sentences: "From Tokyo: 35 min by train", not "It's a 35 minute train ride from Tokyo."
+4. Convert. A paragraph of stops, steps, dates or comparisons becomes a list, table or badges, built from styles the page already has.
+5. Fix the never list, including caps and colored words set in the CSS.
+6. Run the checker with the copy: `check.py --before <copy> <page>`. It fails if less than 30% was cut, or if any block is over 15 words. Keep going until it passes.
 
 Rules 8 and 9 still hold: keep every fact and the search words.
 

@@ -111,7 +111,7 @@ def split_sentences(text):
 
 
 MIN_CUT = 0.30
-LONG_BLOCK = 20
+LONG_BLOCK = 15
 
 
 def visible_words(raw):
@@ -119,11 +119,40 @@ def visible_words(raw):
     return len(words_of(strip_markup(t)))
 
 
+INLINE = {"a", "b", "strong", "em", "i", "span", "code", "small", "abbr", "sup", "sub", "br", "mark"}
+VOID = {"img", "input", "meta", "link", "hr", "wbr", "source", "area", "base", "col", "embed", "track", "path", "rect", "circle", "line"}
+
+
 def text_blocks(raw):
-    t = re.sub(r"<(script|style)[^>]*>.*?</\1>", " ", raw, flags=re.S | re.I)
-    if re.search(r"<(p|li|td|div)\b", t, flags=re.I):
-        return [strip_markup(b) for b in re.findall(r"<(?:p|li|td)\b[^>]*>(.*?)</(?:p|li|td)>", t, flags=re.S | re.I)]
-    return [strip_markup(b) for b in re.split(r"\n\s*\n", t)]
+    """Text of each block element (inline tags merged in), or Markdown paragraphs."""
+    if not re.search(r"<(p|li|td|div|section)\b", raw, flags=re.I):
+        return [strip_markup(b) for b in re.split(r"\n\s*\n", raw)]
+    from html.parser import HTMLParser
+
+    class P(HTMLParser):
+        def __init__(self):
+            super().__init__()
+            self.stack, self.out, self.skip = [[]], [], 0
+
+        def handle_starttag(self, tag, attrs):
+            if tag in ("script", "style", "svg"):
+                self.skip += 1
+            elif tag not in INLINE and tag not in VOID and not self.skip:
+                self.stack.append([])
+
+        def handle_endtag(self, tag):
+            if tag in ("script", "style", "svg"):
+                self.skip = max(0, self.skip - 1)
+            elif tag not in INLINE and tag not in VOID and not self.skip and len(self.stack) > 1:
+                self.out.append(" ".join(self.stack.pop()))
+
+        def handle_data(self, data):
+            if not self.skip:
+                self.stack[-1].append(data)
+
+    p = P()
+    p.feed(raw)
+    return [" ".join(b.split()) for b in p.out + [" ".join(x) for x in p.stack] if b.strip()]
 
 
 def check(name, raw, target, banned):
