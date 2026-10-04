@@ -78,14 +78,16 @@ Fix every flag unless the word is literal or has no simpler swap. The overall gr
 
 ## Editing an existing page
 
-Keep the design: same fonts, colors, layout and components. Change the words and how the content is shown.
+Keep the look: same fonts, colors, spacing and style. The layout can change. The goal is a page that looks clearly lighter, not the same page with shorter sentences.
 
 1. Save a copy of the page before you touch it.
-2. Shrink every note to one line. A note in a card, row, list item or under a heading is about 8 words, never over 15. Section intros are one short sentence, or nothing.
-3. Use labels, not sentences: "From Tokyo: 35 min by train", not "It's a 35 minute train ride from Tokyo."
-4. Convert. A paragraph of stops, steps, dates or comparisons becomes a list, table or badges, built from styles the page already has.
-5. Fix the never list, including caps and colored words set in the CSS.
-6. Run the checker with the copy: `check.py --before <copy> <page>`. It fails if less than 30% was cut, or if any block is over 15 words. Keep going until it passes.
+2. Say each fact once. List what the page repeats (the same best months in the headline, intro, strip, chart and cards). Keep the clearest one and cut the rest.
+3. Restructure. A grid of similar cards becomes one table. Sections that repeat each other merge. A paragraph of stops or steps becomes a list.
+4. Shrink what's left. Every note is one line, about 8 words, never over 15. Use labels, not sentences: "From Tokyo: 35 min by train".
+5. Fit the layout to the new text. Check every section header after cutting. If the text beside a heading (heading on the left, text on the right) is now one line, change that header so the line sits under the heading, or remove the line. Change the header's CSS if you need to. No lone lines floating in empty space.
+6. Any intro you keep must make sense on its own. If it doesn't, cut it.
+7. Fix the never list, including caps and colored words set in the CSS.
+8. Run the checker with the copy: `check.py --before <copy> <page>`. It fails if less than 30% was cut, or if any block is over 15 words. Then look at the page: if it looks about the same as before, go again.
 
 Rules 8 and 9 still hold: keep every fact and the search words.
 
