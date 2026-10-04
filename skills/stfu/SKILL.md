@@ -78,14 +78,14 @@ Fix every flag unless the word is literal or has no simpler swap. The overall gr
 
 ## Editing an existing page
 
-Rewording isn't enough. Go section by section:
+Keep the design. Rewrite the content as if the page were new.
 
-1. Cut. Aim for a third fewer words. If a section can't lose any, say why in one line.
-2. Convert. Any paragraph of facts, dates, steps or comparisons becomes a table, list or badge.
+1. Draft the page from scratch with these rules, using the facts on the current page. Don't look at the old wording while you draft.
+2. Pour the draft into the existing design: same fonts, colors, spacing and components. Build tables, lists and badges from the styles the page already has.
 3. Fix the never list, including caps and colored words set in the CSS.
-4. Then run the checker.
+4. Then run the checker. Expect about a third fewer words. If a section barely changed, say why in one line.
 
-Rules 8 and 9 still hold: keep the facts and the search words. Cut around them.
+Rules 8 and 9 still hold: keep every fact and the search words.
 
 ## How to hand it over
 
