@@ -74,7 +74,18 @@ echo "draft text" | python3 <skill folder>/scripts/check.py -
 
 It flags dashes, caps, emoji, hype words, vague links, missing alt text and hard sentences, and prints an overall grade. From `.stfu.md` it reads `grade: N` as the target, and `not "word"` as a banned word. If you can't run it, check by hand.
 
-Fix every flag unless the word is literal or has no simpler swap. The overall grade must pass.
+Fix every flag unless the word is literal or has no simpler swap. The overall grade must pass. Passing is the floor, not the finish.
+
+## Editing an existing page
+
+Rewording isn't enough. Go section by section:
+
+1. Cut. Aim for a third fewer words. If a section can't lose any, say why in one line.
+2. Convert. Any paragraph of facts, dates, steps or comparisons becomes a table, list or badge.
+3. Fix the never list, including caps and colored words set in the CSS.
+4. Then run the checker.
+
+Rules 8 and 9 still hold: keep the facts and the search words. Cut around them.
 
 ## How to hand it over
 
