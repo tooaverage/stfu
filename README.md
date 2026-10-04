@@ -17,7 +17,7 @@ A skill that makes AI write copy people can read. Use it for words that ship: we
 | Don't break search | Edits keep the words a page ranks for. |
 | Works for everyone | Clear links, alt text, no color-only cues. |
 
-It also bans the usual AI tells (em dashes, all-caps labels, "seamless", "leverage", "It's that simple") and learns from your edits. When you fix a line, the fix becomes a house rule in `.stfu.md`.
+It also bans the usual AI tells (em dashes, all-caps labels, emoji, colored headline words, "seamless", "leverage", "It's that simple") and learns from your edits. When you fix a line, the fix becomes a house rule in `.stfu.md`.
 
 ## Install
 
@@ -47,7 +47,7 @@ python3 skills/stfu/scripts/check.py page.md
 echo "your draft" | python3 skills/stfu/scripts/check.py -
 ```
 
-It flags dashes, all caps, banned words, vague link text, images with no alt text, long sentences and hard sentences, and prints an overall grade. It exits with 1 if anything is flagged, so you can run it in CI.
+It flags dashes, all caps, emoji, banned words, vague link text, images with no alt text, long sentences and hard sentences, and prints an overall grade. It exits with 1 if anything is flagged, so you can run it in CI.
 
 ## House rules
 

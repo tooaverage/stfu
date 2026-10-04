@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""stfu checker: flags dashes, all caps, banned words, vague links, missing alt
-text and hard-to-read sentences.
+"""stfu checker: flags dashes, all caps, emoji, banned words, vague links,
+missing alt text and hard-to-read sentences.
 
 Usage:
   python3 check.py FILE [FILE ...]
@@ -19,6 +19,8 @@ import sys
 
 EM_DASH = "\u2014"
 EN_DASH = "\u2013"
+# Emoji and pictographs. Leaves out simple marks like \u2713 and \u2714 (check marks).
+EMOJI = re.compile("[\U0001F000-\U0001FAFF\u2600-\u2712\u2719-\u27BF\u2B50\u2B55]")
 
 BANNED = [
     "honestly", "quietly", "leverage", "leverages", "leveraging", "streamline",
@@ -134,6 +136,9 @@ def check(name, raw, target, banned):
             flags += 1
         if re.search(r"<img\b(?![^>]*\balt\s*=)[^>]*>", prose, flags=re.I) or re.search(r"!\[\s*\]\(", prose):
             print(f"{name}:{i}: image with no alt text: {line.strip()[:80]}")
+            flags += 1
+        if EMOJI.search(prose):
+            print(f"{name}:{i}: emoji: {line.strip()[:80]}")
             flags += 1
         low = prose.lower()
         for b in banned:

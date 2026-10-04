@@ -26,7 +26,7 @@ This skill is for words that ship: website pages, product UI, onboarding, docs, 
 - Status or rating: badge or color, with a text label.
 - Steps: numbered list or diagram.
 - Every icon has a visible label or alt text. Use one icon set across the product.
-- Every chart, image or diagram gets one short line of text (about 8 words) with the key fact. It's what search engines, screen readers and skimmers get.
+- Every image, chart or diagram has alt text, or real text labels if it's built in HTML or SVG. Add a visible line (about 8 words) only when the visual needs explaining, or when a page that ranks in search would lose the fact without it.
 
 **4. Lead with the answer.** The most useful thing comes first. Detail comes after, if at all.
 
@@ -53,14 +53,14 @@ This skill is for words that ship: website pages, product UI, onboarding, docs, 
 - Alt text says what the image shows or means, in plain words. Don't start with "Image of". Decorative images get empty alt.
 - Errors say what went wrong and how to fix it, next to the field: "Enter a date after today", not "Invalid input".
 - Form fields have real labels. Placeholder text isn't a label.
-- Emoji don't replace words. Screen readers read their names out loud ("green square").
-- Tables are for data, with a header row. Never for layout.
 
 ## Never write these
 
 - **Em dashes (the long dash).** Use a comma, colon, full stop or parentheses. Don't swap in an en dash or " - " either.
 - **Words:** honestly, quietly, leverage, streamline, seamless, effortless, unlock, empower, elevate, supercharge, game-changing, revolutionize, robust, cutting-edge, delve, solution (for a product), offering, "workflow" as a noun. These are fine when literal ("Unlock your account").
 - **All caps.** No uppercase text, including small labels and eyebrows styled with `text-transform: uppercase`. Use sentence case. Only use caps when asked, or when the project's design system already does (check its tokens and existing components first). Acronyms like "MB" or "FAQ" are fine.
+- **Emoji.** Not in headings, buttons, lists or as icons. Use a real icon with a label. Screen readers read emoji names out loud ("green square"). Only use them when asked, or when the brand already does.
+- **Colored words in headlines.** No single word or phrase in a different color or gradient ("Build *faster*"). The whole headline is one color. Only when asked, or when the design system already does.
 - **Setup-punchline hooks.** "Short line. Fragment twist." Write one plain sentence instead.
 - **Neat summary closers.** "That's the power of X." "It's that simple." End on the useful fact.
 - **Tacked-on explaining.** "...which is why this matters." Say it once.
@@ -77,7 +77,7 @@ python3 <skill folder>/scripts/check.py path/to/file.md
 echo "your draft text" | python3 <skill folder>/scripts/check.py -
 ```
 
-It flags dashes, all caps, banned words, vague link text, images with no alt text, long sentences and hard sentences, and prints an overall grade. It also reads `.stfu.md`: `grade: N` sets the target, and any rule written as `not "word"` adds that word to the banned list. If you can't run it, check the same things by hand.
+It flags dashes, all caps, emoji, banned words, vague link text, images with no alt text, long sentences and hard sentences, and prints an overall grade. It also reads `.stfu.md`: `grade: N` sets the target, and any rule written as `not "word"` adds that word to the banned list. If you can't run it, check the same things by hand.
 
 Fix every flag, unless the word is literal or has no simpler swap. The overall grade must pass. Then check by eye: facts match the source, caveats are there, anything that could be a visual is one.
 
