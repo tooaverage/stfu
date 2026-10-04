@@ -52,6 +52,7 @@ Short, To-the-point, Friendly, Useful.
 - **Em dashes.** Use a comma, colon, full stop or parentheses. Not an en dash or " - " either.
 - **Hype words:** honestly, quietly, leverage, streamline, seamless, effortless, unlock, empower, elevate, supercharge, game-changing, revolutionize, robust, cutting-edge, delve, solution (for a product), offering, "workflow" as a noun. Fine when literal ("Unlock your account").
 - **All caps,** including text the CSS turns uppercase (`text-transform: uppercase` on labels and eyebrows). Use sentence case. Acronyms like "FAQ" are fine.
+- **Zero-padded step numbers** ("01", "02", "03"). Use 1, 2, 3, or no numbers if the order doesn't matter.
 - **Eyebrow labels.** The small label above a heading ("Weather score" over "How good is the weather?"). Cut it. The heading does the job.
 - **Colored words in headlines.** One color for the whole headline. No accent-colored or gradient word or line.
 - **Emoji,** including as icons. Screen readers read them out loud ("green square").

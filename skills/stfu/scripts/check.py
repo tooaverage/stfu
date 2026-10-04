@@ -193,6 +193,9 @@ def check(name, raw, target, banned):
         if re.search(r'class(Name)?="[^"]*\b(eyebrow|kicker|overline|section-label)\b', prose, flags=re.I):
             print(f"{name}:{i}: eyebrow label: {line.strip()[:80]}")
             flags += 1
+        if re.search(r">\s*0[1-9]\s*<|^\s*0[1-9][.)]?\s*$|decimal-leading-zero|padStart\(2, *.0.\)", prose):
+            print(f"{name}:{i}: zero-padded step number: {line.strip()[:80]}")
+            flags += 1
         low = prose.lower()
         for b in banned:
             if re.search(r"(?<![a-z])" + re.escape(b) + r"(?![a-z])", low):
