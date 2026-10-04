@@ -11,15 +11,29 @@ Starting from existing text makes you cautious: you keep its structure and nudge
 5. Inside a section you can change the form (steps to a numbered list, options to a table), built from styles the page already has. Detail that only some readers need can fold under a "More..." toggle, so it stays on the page without making it longer. Leave the page layout, section order and look alone unless asked to rebuild.
 6. Expect the page to come out about a third shorter on screen. If it doesn't, look again for repeats and for detail to fold before you hand it over. Never cut a fact to hit a number.
 7. Check your work as SKILL.md describes, including the editing checks in evals.md. Run `check.py --render --before <copy> <page>` to see the change on screen.
-8. If the real problem is the structure (sections that repeat each other, a grid of cards that should be one table), say so in one line and offer a rebuild.
+8. Hand it over element by element, grouped by section, so it's quick to review:
+
+   ```
+   Hero
+   Title · 13 → 8 words
+   Before: "Go from late March to May, or in November."
+   After: "Best time to visit Japan: late March to May, or November"
+   Why: puts the search phrase in the headline.
+   ```
+9. If the real problem is the structure (sections that repeat each other, a grid of cards that should be one table), say so in one line and offer a rebuild.
 
 ## Audit
 
-When asked to audit or review a page, don't change it. Reply with the findings, biggest first, 10 at most, one line each:
+When asked to audit or review a page, don't change it. Reply with the findings, biggest first, 10 at most, in the same element format:
 
-`1. Where: what's wrong. Fix: the exact new text, or the change.`
+```
+1. Months intro · 31 → 14 words
+   Before: "..."
+   After: "..."
+   Why: one line.
+```
 
-Then ask which to apply. When the person picks, apply them with the edit steps above.
+For a change that isn't wording (a repeat to merge, a table, a fact that contradicts another), describe the change in After. Then ask which to apply. When the person picks, apply them with the edit steps above.
 
 ## Rebuild
 

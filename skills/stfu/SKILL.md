@@ -32,12 +32,27 @@ Every job ends with the checks in [references/evals.md](references/evals.md).
 
 1. **Lead with the answer.** The first line of the page, and of each section, says what the reader came for. Setup comes after, if at all.
 2. **Say each thing once.** Repeats are the main reason pages run long. Keep the clearest version and cut the rest.
-3. **Keep it short and plain.** A headline is one line, about 10 words. A section intro is 1 to 2 sentences, or there isn't one. No paragraph runs past 3 lines. Use words a 12-year-old knows, unless the right word is harder ("typhoon"). Write whole sentences: clipped fragments and "Nov" mid-sentence are harder to read, not easier.
+3. **Stay inside the word budget.** Hard limits work better than "be concise", so every element has one:
+
+   | Element | Max |
+   |---|---|
+   | Title or headline | 8 words, up to 12 to keep the words people search for |
+   | Sub under a title | 1 sentence, 15 words |
+   | Section intro | 1 to 2 sentences, or none |
+   | Card, row or table note | 12 words |
+   | Hint or helper text | 10 words |
+   | Button | 3 words |
+   | Tooltip | 1 sentence, 15 words |
+   | Empty or loading state | 15 words |
+   | Error | 20 words: what failed, then what to do |
+   | Paragraph | 3 lines |
+
+   One idea per element. A title says what to do or what you get, and on a task screen it starts with a verb ("Name your workspace"). A sub says why, or what happens next, not both. A button is a verb and an object ("Connect GitHub", not "Continue"). Use words a 12-year-old knows, unless the right word is harder ("typhoon"), and write whole sentences: fragments and "Nov" mid-sentence are harder to read, not easier.
 4. **Show it when it has a shape.** Steps someone follows in order become a numbered list (1, 2, 3). Options compared on the same points become a table. A status becomes a badge with a text label. Ordinary notes stay sentences, because a page of bullets reads like a slide deck.
 5. **Be specific.** Real numbers, names and dates instead of "many" or "several". If a sentence could be pasted onto another product's page unchanged, it isn't saying anything: cut it or make it specific.
-6. **Sound like a person.** Contractions, "you", active voice. Plain words instead of idioms, since "move the needle" means nothing to a lot of readers.
+6. **Sound like a person.** Contractions, "you", active voice. Plain words instead of idioms, since "move the needle" means nothing to a lot of readers. Reuse the terms on nearby screens and sections, and don't invent new metaphors.
 7. **Invite, don't push.** Buttons and links say what happens ("See pricing", not "Learn more"). No fake urgency.
-8. **Keep it true and findable.** Facts, prices and caveats stay accurate: shorten a caveat, never drop it. When editing a live page, keep the words people search for in the title, H1 and first paragraph.
+8. **Keep it true and findable.** Facts, prices and caveats stay accurate: shorten a caveat, never drop it. Use real numbers only, and make privacy or security claims only when you've seen them in the code or a teammate confirmed them. When editing a live page, keep the words people search for in the title, H1 and first paragraph.
 9. **Make it work for everyone.** Images get alt text that says what they show. Errors say what went wrong and how to fix it. Form fields have real labels. Prefer one `aria-label` to lots of hidden text, which makes the page longer and helps no one.
 
 ## AI tells to leave out
@@ -45,7 +60,9 @@ Every job ends with the checks in [references/evals.md](references/evals.md).
 Readers spot these at a glance and stop trusting the page:
 
 - Em dashes, and any dash used as a dramatic pause. In sentences, write ranges with "to" ("March 24 to April 7"). In tables, badges and labels an en dash is fine ("Mar 24–Apr 7").
-- Hype words: leverage, streamline, seamless, effortless, unlock, empower, elevate, supercharge, game-changing, revolutionize, robust, cutting-edge, delve, honestly, quietly, genuinely, solution, offering. They're fine when literal ("Unlock your account").
+- Hype words: leverage, streamline, seamless, effortless, unlock, empower, elevate, supercharge, game-changing, revolutionize, robust, cutting-edge, delve, honestly, quietly, genuinely, solution, offering, "comes alive". They're fine when literal ("Unlock your account").
+- Softeners that promise ease: simply, just, easily, "in seconds".
+- Comparisons with a vague crowd: "most people", "everyone else", "unlike most", "nobody else".
 - Eyebrow labels, the small label above a heading. The heading already does that job.
 - All caps, including text styled uppercase in CSS. Sentence case reads faster.
 - Emoji. Screen readers read them out ("green square"). Use the project's icon set (Lucide, Heroicons or whatever is installed) with a text label, or suggest adding one.
@@ -57,17 +74,19 @@ If the brand already uses caps, emoji or colored words, or the person asks for t
 
 ## Check your work
 
-1. Run the checker from this skill's folder: `python3 <skill folder>/scripts/check.py <file>`. It catches the mechanical tells (dashes, caps, emoji, hype words, vague links, missing alt text) and very long sentences. It can be wrong about literal uses, so judge each flag.
-2. Read [references/evals.md](references/evals.md) and answer every check, pass or fail. If you can start a subagent (the Task or Agent tool), give a fresh one only the page, the must-cover list and evals.md, so it grades what a stranger sees. Fix what fails and grade again, at most 3 rounds.
-3. Hand it over: the copy first, then at most two lines: anything you folded away or left out, and any fact to confirm. Don't describe your process.
+1. Cut pass: delete every sentence the page works without, then every word each sentence works without. Count the words in each element against the budget.
+2. Run the checker from this skill's folder: `python3 <skill folder>/scripts/check.py <file>`. It catches the mechanical tells (dashes, caps, emoji, hype words, vague links, missing alt text) and very long sentences. It can be wrong about literal uses, so judge each flag.
+3. Read [references/evals.md](references/evals.md) and answer every check, pass or fail. If you can start a subagent (the Task or Agent tool), give a fresh one only the page, the must-cover list and evals.md, so it grades what a stranger sees. Fix what fails and grade again, at most 3 rounds.
+4. Hand it over. New copy: show it with the word count beside each element, then at most two lines on anything folded away or left out and any fact to confirm. Edits: list each changed element as in [references/editing.md](references/editing.md). Don't describe your process.
 
 ## House rules
 
 When someone edits your copy or says a line sounds off, the edit is the data:
 
-1. Say in one line what changed.
-2. If it's a pattern, add it to `.stfu.md` with the date. Write word swaps as `Say "trip", not "journey"` so the checker catches them.
-3. Fix the other places it applies.
+1. Compare their version with yours word by word, and say in 1 to 3 lines what changed. Don't defend the original.
+2. A cut is final. Never bring a cut line back in other words. If it solved a real problem, name the problem and offer a different fix.
+3. When the same kind of change happens twice, add one rule to `.stfu.md` with the date and their exact words. Write word swaps as `Say "trip", not "journey"` so the checker catches them.
+4. Fix the other places the rule applies.
 
 ## Examples
 

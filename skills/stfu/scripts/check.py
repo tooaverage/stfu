@@ -39,7 +39,9 @@ BANNED = [
     "look no further", "whether you're", "it's that simple", "let's dive in",
     "as you can see", "here's the thing", "genuinely", "move the needle",
     "moves the needle", "low-hanging fruit", "deep dive", "at the end of the day",
-    "circle back", "best-in-class", "world-class",
+    "circle back", "best-in-class", "world-class", "comes alive", "simply",
+    "easily", "in seconds", "most people", "everyone else", "unlike most",
+    "nobody else",
 ]
 
 # Only very long sentences get flagged. Flagging every sentence over 15 words
