@@ -6,7 +6,9 @@ Usage:
   python3 check.py FILE [FILE ...]
   echo "text" | python3 check.py -
 Options:
-  --grade N   target reading grade (default 6, or "grade: N" in .stfu.md)
+  --grade N      target reading grade (default 6, or "grade: N" in .stfu.md)
+  --before FILE  the page before your edit. Fails if fewer than 30% of the
+                 words were cut.
 
 No dependencies. Strips Markdown, HTML and code blocks before scoring.
 Reads .stfu.md from the current folder or any parent: a "grade: N" line sets
@@ -108,6 +110,22 @@ def split_sentences(text):
     return [p.strip() for p in parts if len(words_of(p)) >= 3]
 
 
+MIN_CUT = 0.30
+LONG_BLOCK = 20
+
+
+def visible_words(raw):
+    t = re.sub(r"<(script|style)[^>]*>.*?</\1>", " ", raw, flags=re.S | re.I)
+    return len(words_of(strip_markup(t)))
+
+
+def text_blocks(raw):
+    t = re.sub(r"<(script|style)[^>]*>.*?</\1>", " ", raw, flags=re.S | re.I)
+    if re.search(r"<(p|li|td|div)\b", t, flags=re.I):
+        return [strip_markup(b) for b in re.findall(r"<(?:p|li|td)\b[^>]*>(.*?)</(?:p|li|td)>", t, flags=re.S | re.I)]
+    return [strip_markup(b) for b in re.split(r"\n\s*\n", t)]
+
+
 def check(name, raw, target, banned):
     flags = 0
     in_code = False
@@ -146,6 +164,12 @@ def check(name, raw, target, banned):
                 print(f"{name}:{i}: banned '{b}': {line.strip()[:80]}")
                 flags += 1
 
+    for b in text_blocks(raw):
+        n = len(words_of(b))
+        if n > LONG_BLOCK:
+            print(f"{name}: long block ({n} words), cut it or make it a list or table: {' '.join(b.split())[:80]}")
+            flags += 1
+
     text = strip_markup(raw)
     sents = split_sentences(text)
     tw = ts = 0
@@ -172,6 +196,11 @@ def main(argv):
         i = argv.index("--grade")
         target = float(argv[i + 1])
         argv = argv[:i] + argv[i + 2:]
+    before = None
+    if "--before" in argv:
+        i = argv.index("--before")
+        before = argv[i + 1]
+        argv = argv[:i] + argv[i + 2:]
     if not argv:
         print(__doc__)
         return 2
@@ -186,6 +215,16 @@ def main(argv):
         else:
             with open(path, encoding="utf-8") as f:
                 total += check(path, f.read(), t, banned)
+    if before and argv[-1] != "-":
+        with open(before, encoding="utf-8") as f:
+            was = visible_words(f.read())
+        with open(argv[-1], encoding="utf-8") as f:
+            now = visible_words(f.read())
+        cut = 1 - now / was if was else 0
+        status = "OK" if cut >= MIN_CUT else f"NOT ENOUGH (aim for {MIN_CUT:.0%})"
+        print(f"{argv[-1]}: words {was} -> {now}, cut {cut:.0%}: {status}")
+        if cut < MIN_CUT:
+            total += 1
     return 1 if total else 0
 
 
