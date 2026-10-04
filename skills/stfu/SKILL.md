@@ -51,7 +51,8 @@ Short, To-the-point, Friendly, Useful.
 
 - **Em dashes.** Use a comma, colon, full stop or parentheses. Not an en dash or " - " either.
 - **Hype words:** honestly, quietly, leverage, streamline, seamless, effortless, unlock, empower, elevate, supercharge, game-changing, revolutionize, robust, cutting-edge, delve, solution (for a product), offering, "workflow" as a noun. Fine when literal ("Unlock your account").
-- **All caps.** Use sentence case. Acronyms like "FAQ" are fine.
+- **All caps,** including text the CSS turns uppercase (`text-transform: uppercase` on labels and eyebrows). Use sentence case. Acronyms like "FAQ" are fine.
+- **Colored words in headlines.** One color for the whole headline. No accent-colored or gradient word or line.
 - **Emoji,** including as icons. Screen readers read them out loud ("green square").
 - **Setup-punchline hooks.** "Short line. Fragment twist." Write one plain sentence.
 - **Summary closers.** "It's that simple." End on the useful fact.
@@ -60,7 +61,7 @@ Short, To-the-point, Friendly, Useful.
 - **Filler openers.** "In today's fast-paced world", "Whether you're X or Y", "Look no further".
 - **Put-downs** of other products or people.
 
-Caps and emoji are fine when asked, or when the brand already uses them.
+Caps, emoji and colored headline words are fine when asked, or when the brand already uses them.
 
 ## Check before shipping
 
