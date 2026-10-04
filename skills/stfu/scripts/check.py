@@ -7,7 +7,7 @@ Usage:
   echo "text" | python3 check.py -
 Options:
   --grade N      target reading grade (default 6, or "grade: N" in .stfu.md)
-  --before FILE  the page before your edit. Fails if fewer than 30% of the
+  --before FILE  the page before your edit. Fails if fewer than 20% of the
                  words were cut.
 
 No dependencies. Strips Markdown, HTML and code blocks before scoring.
@@ -110,8 +110,8 @@ def split_sentences(text):
     return [p.strip() for p in parts if len(words_of(p)) >= 3]
 
 
-MIN_CUT = 0.30
-LONG_BLOCK = 15
+MIN_CUT = 0.20
+LONG_BLOCK = 25
 
 
 def visible_words(raw):
@@ -186,6 +186,9 @@ def check(name, raw, target, banned):
             flags += 1
         if EMOJI.search(prose):
             print(f"{name}:{i}: emoji: {line.strip()[:80]}")
+            flags += 1
+        if re.search(r'class(Name)?="[^"]*\b(eyebrow|kicker|overline|section-label)\b', prose, flags=re.I):
+            print(f"{name}:{i}: eyebrow label: {line.strip()[:80]}")
             flags += 1
         low = prose.lower()
         for b in banned:

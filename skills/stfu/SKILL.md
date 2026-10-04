@@ -52,6 +52,7 @@ Short, To-the-point, Friendly, Useful.
 - **Em dashes.** Use a comma, colon, full stop or parentheses. Not an en dash or " - " either.
 - **Hype words:** honestly, quietly, leverage, streamline, seamless, effortless, unlock, empower, elevate, supercharge, game-changing, revolutionize, robust, cutting-edge, delve, solution (for a product), offering, "workflow" as a noun. Fine when literal ("Unlock your account").
 - **All caps,** including text the CSS turns uppercase (`text-transform: uppercase` on labels and eyebrows). Use sentence case. Acronyms like "FAQ" are fine.
+- **Eyebrow labels.** The small label above a heading ("Weather score" over "How good is the weather?"). Cut it. The heading does the job.
 - **Colored words in headlines.** One color for the whole headline. No accent-colored or gradient word or line.
 - **Emoji,** including as icons. Screen readers read them out loud ("green square").
 - **Setup-punchline hooks.** "Short line. Fragment twist." Write one plain sentence.
@@ -76,18 +77,24 @@ It flags dashes, caps, emoji, hype words, vague links, missing alt text, long bl
 
 Fix every flag unless the word is literal or has no simpler swap. The overall grade must pass.
 
+## Rebuilding a page
+
+When someone asks to rebuild or redo a page, keep its branding (colors, fonts, spacing and the style of its components) and build the structure fresh from the content, with every rule above. Card grids can become tables, repeated sections merge, paragraphs become visuals.
+
+1. Save a copy of the page first.
+2. List the facts on the page. Each one appears once in the rebuild.
+3. Rules 8 and 9 still hold.
+
 ## Editing an existing page
 
-Keep the look: same fonts, colors, spacing and style. The layout can change. The goal is a page that looks clearly lighter, not the same page with shorter sentences.
+Change the text only. Keep the layout, sections, components and look as they are.
 
 1. Save a copy of the page before you touch it.
-2. Say each fact once. List what the page repeats (the same best months in the headline, intro, strip, chart and cards). Keep the clearest one and cut the rest.
-3. Restructure. A grid of similar cards becomes one table. Sections that repeat each other merge. A paragraph of stops or steps becomes a list.
-4. Shrink what's left. Every note is one line, about 8 words, never over 15. Use labels, not sentences: "From Tokyo: 35 min by train".
-5. Fit the layout to the new text. Check every section header after cutting. If the text beside a heading (heading on the left, text on the right) is now one line, change that header so the line sits under the heading, or remove the line. Change the header's CSS if you need to. No lone lines floating in empty space.
-6. Any intro you keep must make sense on its own. If it doesn't, cut it.
-7. Fix the never list, including caps and colored words set in the CSS.
-8. Run the checker with the copy: `check.py --before <copy> <page>`. It fails if less than 30% was cut, or if any block is over 15 words. Then look at the page: if it looks about the same as before, go again.
+2. Tighten every line. Cut filler, hedges and anything the page already says somewhere else.
+3. Keep sentences whole and natural. Don't turn them into clipped fragments ("Forecasts from September") or abbreviate words in a sentence ("Nov"). Don't turn paragraphs into bullet points.
+4. Fix the never list, including caps and colored words set in the CSS.
+5. Run the checker with the copy: `check.py --before <copy> <page>`. It fails if less than 20% was cut, or if any block is over 25 words.
+6. Don't restructure. If the page would be much better with a different structure (cards that should be a table, sections that repeat each other), say so in one line after the copy, and suggest a rebuild: "Use stfu to rebuild this page with the same branding."
 
 Rules 8 and 9 still hold: keep every fact and the search words.
 
