@@ -47,6 +47,8 @@ Every job ends with the checks in [references/evals.md](references/evals.md).
    | Error | 20 words: what failed, then what to do |
    | Paragraph | 3 lines |
 
+   The budget wins. When a fact doesn't fit, give it its own element (a table row, a note, a "More" toggle), or cut it if the page says it somewhere else. Don't stretch the element to hold it.
+
    One idea per element. A title says what to do or what you get, and on a task screen it starts with a verb ("Name your workspace"). A sub says why, or what happens next, not both. A button is a verb and an object ("Connect GitHub", not "Continue"). Use words a 12-year-old knows, unless the right word is harder ("typhoon"), and write whole sentences: fragments and "Nov" mid-sentence are harder to read, not easier.
 4. **Show it when it has a shape.** Steps someone follows in order become a numbered list (1, 2, 3). Options compared on the same points become a table. A status becomes a badge with a text label. Ordinary notes stay sentences, because a page of bullets reads like a slide deck.
 5. **Be specific.** Real numbers, names and dates instead of "many" or "several". If a sentence could be pasted onto another product's page unchanged, it isn't saying anything: cut it or make it specific.
@@ -77,7 +79,7 @@ If the brand already uses caps, emoji or colored words, or the person asks for t
 1. Cut pass: delete every sentence the page works without, then every word each sentence works without. Count the words in each element against the budget.
 2. Run the checker from this skill's folder: `python3 <skill folder>/scripts/check.py <file>`. It catches the mechanical tells (dashes, caps, emoji, hype words, vague links, missing alt text) and very long sentences. It can be wrong about literal uses, so judge each flag.
 3. Read [references/evals.md](references/evals.md) and answer every check, pass or fail. If you can start a subagent (the Task or Agent tool), give a fresh one only the page, the must-cover list and evals.md, so it grades what a stranger sees. Fix what fails and grade again, at most 3 rounds.
-4. Hand it over. New copy: show it with the word count beside each element, then at most two lines on anything folded away or left out and any fact to confirm. Edits: list each changed element as in [references/editing.md](references/editing.md). Don't describe your process.
+4. Hand it over. New copy: show it with the word count beside each element, then at most two lines on anything folded away or left out and any fact to confirm. Edits: list each changed element as in [references/editing.md](references/editing.md). Start with the first change, not a summary of what you did or which checks ran.
 
 ## House rules
 
