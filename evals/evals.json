@@ -1,0 +1,33 @@
+{
+  "skill_name": "stfu",
+  "evals": [
+    {
+      "id": 1,
+      "name": "landing-page-from-brief",
+      "prompt": "make a landing page for gowhereandwhen, a site that tells you the best time to visit a country. Make the page for Japan. It should have:\n  - that it's best to go late March to May or November, avoid August to October\n  - a weather score\n  - month by month how the weather is\n  - show different japanese cities best time to go\n  - a suggested 2 week route\n  - best time for cherry blossom, autumn leaves, skiing and smaller crowds\n  - how to book a shinkansen ticket, for a first-time visitor\nSave it as index.html.",
+      "expected_output": "A single-page site that covers every bullet in the brief, leads with the best months, uses tables and numbered steps where content has that shape, and passes skills/stfu/references/evals.md.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "edit-existing-page",
+      "prompt": "Use stfu on index.html.",
+      "expected_output": "The same page, same look, shorter on screen, every fact still there, and passes the editing checks in skills/stfu/references/evals.md.",
+      "files": ["fixtures/japan-no-stfu.html"]
+    },
+    {
+      "id": 3,
+      "name": "audit-only",
+      "prompt": "Audit the copy on index.html with stfu.",
+      "expected_output": "No change to the file. A numbered list of at most 10 findings, biggest first, each with where, what's wrong and the exact fix, then a question about which to apply.",
+      "files": ["fixtures/japan-no-stfu.html"]
+    },
+    {
+      "id": 4,
+      "name": "ui-microcopy",
+      "prompt": "Write the empty state, the upload error (file over 25 MB) and the onboarding tooltip for the Share button in a design review tool.",
+      "expected_output": "Three short pieces of copy. Each leads with what happened or what to do, has no AI tells, and the error says how to fix it.",
+      "files": []
+    }
+  ]
+}

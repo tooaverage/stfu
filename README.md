@@ -4,20 +4,25 @@
 
 A skill that makes AI write copy people can read: website pages, product UI, onboarding, docs, errors and empty states.
 
-| Rule | What it means |
+| Rule | Why |
 |---|---|
-| Cut first | If a word can go, it goes. |
-| Grade 6 | Short, common words. Sentences under 15 words. |
-| Visual first | Tables, badges and lists beat paragraphs. |
-| Lead with the answer | The useful thing comes first. |
+| Lead with the answer | Readers decide in the first line whether to keep reading. |
+| Say each thing once | Repeats are the main reason pages run long. |
+| Short and plain | Headlines about 10 words, intros 1 to 2 sentences, paragraphs 3 lines at most. |
+| Show it when it has a shape | Steps get numbers, comparisons get a table. Notes stay sentences. |
 | Be specific | Real numbers, names and dates. |
-| Sound like a person | Contractions, "you", plain verbs. |
-| Friendly, not pushy | No fake urgency. |
-| Never change the truth | Facts, prices and caveats stay right. |
-| Don't break search | Edits keep the words a page ranks for. |
-| Works for everyone | Clear links, alt text, helpful errors. |
+| Keep every fact | Detail can fold into "show more". Nothing on the brief disappears. |
+| Works for everyone | Clear links, alt text, errors that say how to fix them. |
 
-It also bans AI tells like em dashes, emoji, all caps and "seamless". When you fix a line, the fix becomes a house rule.
+It also leaves out the usual AI tells: em dashes, hype words, eyebrow labels, all caps, emoji, colored headline words and 01/02/03 steps.
+
+## Use it
+
+- **Write:** ask for any copy that ships, like a landing page, onboarding or an error message. stfu loads on its own.
+- **Edit:** "Use stfu on index.html". It keeps the look and makes the page shorter on screen, with every fact kept.
+- **Audit:** "Audit the copy on index.html with stfu". You get up to 10 findings with fixes, and nothing changes until you pick.
+
+Each run grades itself against [references/evals.md](skills/stfu/references/evals.md), a list of pass/fail checks.
 
 ## Install
 
@@ -38,14 +43,12 @@ For Claude.ai, zip the `skills/stfu` folder and upload it as a skill in Settings
 
 ## Check your copy
 
-Needs only Python 3.
-
 ```
-python3 skills/stfu/scripts/check.py page.md
-echo "your draft" | python3 skills/stfu/scripts/check.py -
+python3 skills/stfu/scripts/check.py page.html
+python3 skills/stfu/scripts/check.py --render --before old.html page.html
 ```
 
-It flags dashes, caps, emoji, hype words, vague links, missing alt text and hard sentences. It exits with 1 if anything is flagged, so it works in CI.
+The first catches the mechanical tells. `--render` reads the page the way a browser shows it (needs Playwright) and prints words on screen and page height, before and after. It exits with 1 if anything is flagged, so it works in CI.
 
 ## House rules
 
@@ -59,7 +62,11 @@ grade: 8
 - 2026-09-30: Say "trip", not "journey".
 ```
 
-`grade: 8` raises the target, for technical docs. `Say "X", not "Y"` adds Y to the banned words. See [examples/](examples/).
+`grade: 8` raises the target, for technical docs. `Say "X", not "Y"` adds Y to the banned words.
+
+## Testing the skill
+
+[evals/evals.json](evals/evals.json) has test prompts in skill-creator's format, and [evals/triggers.json](evals/triggers.json) has prompts that should and shouldn't load the skill. Run them with and without stfu and grade both against the evals list.
 
 ## For chat
 

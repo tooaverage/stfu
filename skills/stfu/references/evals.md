@@ -1,0 +1,28 @@
+# stfu evals
+
+Grade the copy once it's written. Each check is pass or fail, never a score, because a model can't reliably tell a 3 out of 5 from a 4. For every fail, quote the line and give the fix in a few words. Grade what a first-time visitor sees.
+
+## Every page
+
+1. The first line of the page and of each section gives the answer, not a setup.
+2. Everything on the must-cover list is still there and still true, either visible or in a "show more".
+3. Nothing is said twice.
+4. Numbers, names and dates are specific. No "many", "several" or "various".
+5. No sentence could be pasted onto another product's page unchanged.
+6. Each headline is one line, about 10 words, longer only to keep search words.
+7. Each section intro is 1 to 2 sentences or there isn't one, and no paragraph runs past 3 lines.
+8. Steps are numbered 1, 2, 3, and options compared on the same points are a table. Ordinary notes are sentences, not bullets.
+9. Sentences are whole and plain: contractions, "you", active voice. No fragments, no "Nov" mid-sentence, no idioms.
+10. Buttons and links say what happens, and nothing pushes with fake urgency.
+11. None of the AI tells listed in SKILL.md.
+12. Images have alt text, errors say how to fix them, and form fields have labels.
+
+## Editing an existing page
+
+13. Same fonts, colors and style as before.
+14. Shorter on screen than before (`check.py --render --before <copy> <page>` shows both).
+15. The search words are still in the title, H1 and first paragraph.
+
+## When to stop
+
+Stop when everything passes, or after 3 rounds. If a check still fails, name it in the hand-over line.

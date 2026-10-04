@@ -1,5 +1,0 @@
-Write the empty-state copy for a notes app screen with no notes yet. Just the copy.
-Write the hero section (headline, subhead, button) for a landing page for a tool that tells you the best month to visit any city based on weather.
-Write the error message shown when a file upload fails because the file is over 25 MB.
-Rewrite this so it's better: "In today's fast-paced world, our robust platform empowers teams to seamlessly streamline their workflow and unlock their full potential."
-Write the onboarding tooltip that explains what the "Share" button does in a design review tool.

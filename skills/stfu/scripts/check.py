@@ -1,16 +1,21 @@
 #!/usr/bin/env python3
-"""stfu checker: flags dashes, all caps, emoji, banned words, vague links,
-missing alt text and hard-to-read sentences.
+"""stfu checker: flags the mechanical AI tells (em dashes, dashes used as a
+pause, all caps, emoji, hype words, eyebrow labels, 01/02/03 steps), vague
+links, images with no alt text and very long sentences.
 
 Usage:
   python3 check.py FILE [FILE ...]
   echo "text" | python3 check.py -
 Options:
   --grade N      target reading grade (default 6, or "grade: N" in .stfu.md)
-  --before FILE  the page before your edit. Fails if fewer than 20% of the
-                 words were cut.
+  --render       read pages the way a browser shows them, including text built
+                 by JavaScript, and print visible words and page height.
+                 Needs Playwright (pip install playwright).
+  --before FILE  with --render: also print the old page's words and height,
+                 so you can see if the edit made the page shorter.
 
-No dependencies. Strips Markdown, HTML and code blocks before scoring.
+Without --render it reads the source: Markdown, HTML, and the strings inside
+<script> (not the code around them).
 Reads .stfu.md from the current folder or any parent: a "grade: N" line sets
 the target, and any rule written as 'not "word"' adds that word to the list.
 Exit code 1 if anything was flagged, 0 if clean.
@@ -32,16 +37,14 @@ BANNED = [
     "revolutionary", "robust", "cutting-edge", "delve", "utilize", "utilise",
     "facilitate", "commence", "offering", "in today's fast-paced world",
     "look no further", "whether you're", "it's that simple", "let's dive in",
-    "as you can see", "here's the thing",
+    "as you can see", "here's the thing", "genuinely", "move the needle",
+    "moves the needle", "low-hanging fruit", "deep dive", "at the end of the day",
+    "circle back", "best-in-class", "world-class",
 ]
 
-# A sentence is flagged when it is longer than this, or when it is both
-# fairly long and far above the target grade. Grade formulas swing wildly on
-# short sentences ("Your subscription renews automatically" scores 18), so
-# short sentences only count toward the overall grade.
-MAX_WORDS = 15
-HARD_MIN_WORDS = 10
-HARD_MARGIN = 3
+# Only very long sentences get flagged. Flagging every sentence over 15 words
+# taught the model to split sentences, which made pages longer, not shorter.
+MAX_WORDS = 25
 
 
 def find_house_rules(start):
@@ -113,135 +116,170 @@ def split_sentences(text):
     return [p.strip() for p in parts if len(words_of(p)) >= 3]
 
 
-MIN_CUT = 0.20
-LONG_BLOCK = 25
+
+PAUSE_DASH = re.compile(r"\w\s+(?:–|--?)\s+\w")
+STRING = re.compile(r"'((?:[^'\\]|\\.)*)'|\"((?:[^\"\\]|\\.)*)\"|`([^`]*)`")
+VAGUE = r"(?:click here|here|learn more|read more|more|this link|link)"
 
 
-def visible_words(raw):
-    t = re.sub(r"<(script|style)[^>]*>.*?</\1>", " ", raw, flags=re.S | re.I)
-    return len(words_of(strip_markup(t)))
+def script_lines(raw):
+    """Line numbers that sit inside <script> blocks."""
+    inside, out = False, set()
+    for i, line in enumerate(raw.splitlines(), 1):
+        low = line.lower()
+        opens = "<script" in low
+        if inside or opens:
+            out.add(i)
+        if opens and "</script>" not in low.split("<script", 1)[1]:
+            inside = True
+        if "</script>" in low:
+            inside = False
+    return out
 
 
-INLINE = {"a", "b", "strong", "em", "i", "span", "code", "small", "abbr", "sup", "sub", "br", "mark"}
-VOID = {"img", "input", "meta", "link", "hr", "wbr", "source", "area", "base", "col", "embed", "track", "path", "rect", "circle", "line"}
-
-
-def text_blocks(raw):
-    """Text of each block element (inline tags merged in), or Markdown paragraphs."""
-    if not re.search(r"<(p|li|td|div|section)\b", raw, flags=re.I):
-        return [strip_markup(b) for b in re.split(r"\n\s*\n", raw)]
-    from html.parser import HTMLParser
-
-    class P(HTMLParser):
-        def __init__(self):
-            super().__init__()
-            self.stack, self.out, self.skip = [[]], [], 0
-
-        def handle_starttag(self, tag, attrs):
-            if tag in ("script", "style", "svg"):
-                self.skip += 1
-            elif tag not in INLINE and tag not in VOID and not self.skip:
-                self.stack.append([])
-
-        def handle_endtag(self, tag):
-            if tag in ("script", "style", "svg"):
-                self.skip = max(0, self.skip - 1)
-            elif tag not in INLINE and tag not in VOID and not self.skip and len(self.stack) > 1:
-                self.out.append(" ".join(self.stack.pop()))
-
-        def handle_data(self, data):
-            if not self.skip:
-                self.stack[-1].append(data)
-
-    p = P()
-    p.feed(raw)
-    return [" ".join(b.split()) for b in p.out + [" ".join(x) for x in p.stack] if b.strip()]
-
-
-def check(name, raw, target, banned):
+def markup_flags(name, raw):
+    """Checks that need the source: CSS, classes, links, images."""
     flags = 0
-    in_code = False
+    for i, line in enumerate(raw.splitlines(), 1):
+        hits = []
+        if re.search(r"text-transform\s*:\s*uppercase", line, flags=re.I) or (re.search(r"\buppercase\b", line) and re.search(r"class(Name)?=", line)):
+            hits.append("uppercase style")
+        if re.search(r"\[\s*" + VAGUE + r"\s*\]\(", line, flags=re.I) or re.search(r">\s*" + VAGUE + r"\s*</a>", line, flags=re.I):
+            hits.append("vague link text")
+        if re.search(r"<img\b(?![^>]*\balt\s*=)[^>]*>", line, flags=re.I) or re.search(r"!\[\s*\]\(", line):
+            hits.append("image with no alt text")
+        if re.search(r'class(Name)?="[^"]*\b(eyebrow|kicker|overline|section-label)\b', line, flags=re.I):
+            hits.append("eyebrow label")
+        if re.search(r">\s*0[1-9]\s*<|decimal-leading-zero|padStart\(2, *.0.\)", line):
+            hits.append("zero-padded step number")
+        for hit in hits:
+            print(f"{name}:{i}: {hit}: {line.strip()[:80]}")
+        flags += len(hits)
+    return flags
+
+
+def prose_flags(name, lines, banned):
+    """Checks on the words people read. lines: (line number, text) pairs."""
+    flags = 0
+    for i, text in lines:
+        found = []
+        if EM_DASH in text:
+            found.append("em dash")
+        if PAUSE_DASH.search(text.lstrip(" -*>")):
+            found.append("dash used as a pause")
+        if re.search(r"\b[A-Z]{2,}\b(?:[\s,:!.-]+\b[A-Z]{2,}\b)+", text):
+            found.append("all caps")
+        if EMOJI.search(text):
+            found.append("emoji")
+        if re.fullmatch(r"\s*0[1-9][.)]?\s*", text):
+            found.append("zero-padded step number")
+        low = text.lower()
+        found += [f"banned '{b}'" for b in banned if re.search(r"(?<![a-z])" + re.escape(b) + r"(?![a-z])", low)]
+        for f in found:
+            print(f"{name}:{i}: {f}: {text.strip()[:80]}")
+        flags += len(found)
+    return flags
+
+
+def source_prose(raw):
+    """The readable text in a source file, line by line. In <script> only the strings count."""
+    in_script, in_code, out = script_lines(raw), False, []
     for i, line in enumerate(raw.splitlines(), 1):
         if line.lstrip().startswith("```"):
             in_code = not in_code
             continue
         if in_code:
             continue
-        prose = re.sub(r"`[^`]*`", " ", line)
-        if EM_DASH in prose:
-            print(f"{name}:{i}: em dash: {line.strip()[:80]}")
-            flags += 1
-        if EN_DASH in prose or re.search(r"\s--?\s", prose.lstrip(" -*>")):
-            print(f"{name}:{i}: dash used as a pause: {line.strip()[:80]}")
-            flags += 1
-        if re.search(r"text-transform\s*:\s*uppercase", prose, flags=re.I) or re.search(r"\buppercase\b", prose) and re.search(r"class(Name)?=", prose):
-            print(f"{name}:{i}: uppercase style: {line.strip()[:80]}")
-            flags += 1
-        elif re.search(r"\b[A-Z]{2,}\b(?:[\s,:!.-]+\b[A-Z]{2,}\b)+", prose):
-            print(f"{name}:{i}: all caps: {line.strip()[:80]}")
-            flags += 1
-        vague = r"(?:click here|here|learn more|read more|more|this link|link)"
-        if re.search(r"\[\s*" + vague + r"\s*\]\(", prose, flags=re.I) or re.search(r">\s*" + vague + r"\s*</a>", prose, flags=re.I):
-            print(f"{name}:{i}: vague link text: {line.strip()[:80]}")
-            flags += 1
-        if re.search(r"<img\b(?![^>]*\balt\s*=)[^>]*>", prose, flags=re.I) or re.search(r"!\[\s*\]\(", prose):
-            print(f"{name}:{i}: image with no alt text: {line.strip()[:80]}")
-            flags += 1
-        if EMOJI.search(prose):
-            print(f"{name}:{i}: emoji: {line.strip()[:80]}")
-            flags += 1
-        if re.search(r'class(Name)?="[^"]*\b(eyebrow|kicker|overline|section-label)\b', prose, flags=re.I):
-            print(f"{name}:{i}: eyebrow label: {line.strip()[:80]}")
-            flags += 1
-        if re.search(r">\s*0[1-9]\s*<|^\s*0[1-9][.)]?\s*$|decimal-leading-zero|padStart\(2, *.0.\)", prose):
-            print(f"{name}:{i}: zero-padded step number: {line.strip()[:80]}")
-            flags += 1
-        low = prose.lower()
-        for b in banned:
-            if re.search(r"(?<![a-z])" + re.escape(b) + r"(?![a-z])", low):
-                print(f"{name}:{i}: banned '{b}': {line.strip()[:80]}")
-                flags += 1
+        if i in in_script:
+            text = " ".join(g for m in STRING.finditer(line) for g in m.groups() if g)
+        else:
+            text = re.sub(r"`[^`]*`", " ", line)
+        if text.strip():
+            out.append((i, text))
+    return out
 
-    for b in text_blocks(raw):
-        n = len(words_of(b))
-        if n > LONG_BLOCK:
-            print(f"{name}: long block ({n} words), cut it or make it a list or table: {' '.join(b.split())[:80]}")
-            flags += 1
 
-    text = strip_markup(raw)
-    sents = split_sentences(text)
+def grade_flags(name, text, target):
+    flags = 0
+    sents = split_sentences(strip_markup(text))
     tw = ts = 0
     for s in sents:
         w = words_of(s)
         syl = sum(syllables(x) for x in w)
         tw += len(w)
         ts += syl
-        g = grade(len(w), 1, syl)
-        if len(w) > MAX_WORDS or (g > target + HARD_MARGIN and len(w) >= HARD_MIN_WORDS):
-            print(f"{name}: grade {g:.1f} ({len(w)} words): {s[:100]}")
+        if len(w) > MAX_WORDS:
+            print(f"{name}: long sentence ({len(w)} words): {s[:100]}")
             flags += 1
     overall = grade(tw, len(sents), ts)
     status = "OK" if overall <= target + 0.5 else "TOO HARD"
     print(f"{name}: overall grade {overall:.1f} (target {target:g}), {len(sents)} sentences, {tw} words: {status}")
-    if overall > target + 0.5:
-        flags += 1
+    return flags + (1 if overall > target + 0.5 else 0)
+
+
+RENDER_JS = """() => {
+  // Leave out text only screen readers get (1px boxes, clipped), so the count matches what people see.
+  const hidden = [];
+  for (const el of document.body.querySelectorAll('*')) {
+    const r = el.getBoundingClientRect(), s = getComputedStyle(el);
+    if ((r.width <= 1 && r.height <= 1 && el.textContent.trim()) || s.clip === 'rect(0px, 0px, 0px, 0px)' || s.clipPath === 'inset(50%)') hidden.push([el, el.style.display]);
+  }
+  hidden.forEach(([el]) => el.style.display = 'none');
+  const text = document.body.innerText;
+  hidden.forEach(([el, d]) => el.style.display = d);
+  return {text, height: document.documentElement.scrollHeight};
+}"""
+
+
+def render(path):
+    try:
+        from playwright.sync_api import sync_playwright
+    except ImportError:
+        return None
+    with sync_playwright() as p:
+        b = p.chromium.launch()
+        pg = b.new_page(viewport={"width": 1280, "height": 900})
+        pg.goto("file://" + os.path.abspath(path))
+        pg.wait_for_timeout(300)
+        r = pg.evaluate(RENDER_JS)
+        b.close()
+        return r
+
+
+def check(name, raw, target, banned, rendered=None):
+    flags = markup_flags(name, raw)
+    if rendered is None:
+        flags += prose_flags(name, source_prose(raw), banned)
+        text = "\n".join(re.sub(r"<(script|style)[^>]*>.*?</\1>", " ", raw, flags=re.S | re.I).splitlines())
+        flags += grade_flags(name, text, target)
+    else:
+        lines = [(f"rendered line {n}", t) for n, t in enumerate(rendered["text"].splitlines(), 1) if t.strip()]
+        flags += prose_flags(name, [(i, t) for i, t in lines], banned)
+        flags += grade_flags(name, rendered["text"].replace("\n", "\n\n"), target)
+        print(f"{name}: on screen {len(words_of(rendered['text']))} words, page height {rendered['height']}px")
     return flags
 
 
+def take(argv, flag, has_value=True):
+    if flag not in argv:
+        return argv, None
+    i = argv.index(flag)
+    if has_value:
+        return argv[:i] + argv[i + 2:], argv[i + 1]
+    return argv[:i] + argv[i + 1:], True
+
+
 def main(argv):
-    target = None
-    if "--grade" in argv:
-        i = argv.index("--grade")
-        target = float(argv[i + 1])
-        argv = argv[:i] + argv[i + 2:]
-    before = None
-    if "--before" in argv:
-        i = argv.index("--before")
-        before = argv[i + 1]
-        argv = argv[:i] + argv[i + 2:]
+    argv, target = take(argv, "--grade")
+    argv, before = take(argv, "--before")
+    argv, do_render = take(argv, "--render", has_value=False)
+    target = float(target) if target else None
     if not argv:
         print(__doc__)
         return 2
+    if do_render and not _has_playwright():
+        print("--render needs Playwright (pip install playwright, then playwright install chromium). Reading the source instead.")
+        do_render = False
     total = 0
     for path in argv:
         start = os.getcwd() if path == "-" else os.path.dirname(os.path.abspath(path))
@@ -250,20 +288,23 @@ def main(argv):
         banned = BANNED + [w for w in extra if w not in BANNED]
         if path == "-":
             total += check("stdin", sys.stdin.read(), t, banned)
-        else:
-            with open(path, encoding="utf-8") as f:
-                total += check(path, f.read(), t, banned)
-    if before and argv[-1] != "-":
-        with open(before, encoding="utf-8") as f:
-            was = visible_words(f.read())
-        with open(argv[-1], encoding="utf-8") as f:
-            now = visible_words(f.read())
-        cut = 1 - now / was if was else 0
-        status = "OK" if cut >= MIN_CUT else f"NOT ENOUGH (aim for {MIN_CUT:.0%})"
-        print(f"{argv[-1]}: words {was} -> {now}, cut {cut:.0%}: {status}")
-        if cut < MIN_CUT:
-            total += 1
+            continue
+        with open(path, encoding="utf-8") as f:
+            raw = f.read()
+        total += check(path, raw, t, banned, render(path) if do_render else None)
+    if do_render and before and argv[-1] != "-":
+        was, now = render(before), render(argv[-1])
+        print(f"before -> after: {len(words_of(was['text']))} -> {len(words_of(now['text']))} words on screen, "
+              f"{was['height']} -> {now['height']}px tall")
     return 1 if total else 0
+
+
+def _has_playwright():
+    try:
+        import playwright.sync_api  # noqa: F401
+        return True
+    except ImportError:
+        return False
 
 
 if __name__ == "__main__":

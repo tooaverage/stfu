@@ -1,0 +1,611 @@
+<title>Japan · gowhereandwhen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a rail-timetable page. Hero verdict + year strip, then sections read like platforms on a line. */
+:root {
+  --paper: #F4F6FA;
+  --surface: #FFFFFF;
+  --ink: #18223D;
+  --muted: #5A6482;
+  --line: #D8DEEA;
+  --sakura: #C9476F;
+  --sakura-soft: #F7DDE6;
+  --s3: #C9476F;
+  --s2: #7F95CF;
+  --s1: #D6DDEE;
+  --s0: #ECEEF3;
+  --s3-fg: #FFFFFF;
+  --s2-fg: #FFFFFF;
+  --s1-fg: #3A4466;
+  --s0-fg: #8A92AA;
+  --font-display: "Dela Gothic One", "Hiragino Sans", "Arial Black", sans-serif;
+  --font-body: "Zen Kaku Gothic New", "Hiragino Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --step--1: 0.8125rem;
+  --step-0: 1rem;
+  --step-1: 1.25rem;
+  --step-2: 1.6rem;
+  --step-3: clamp(1.9rem, 4vw, 2.6rem);
+  --step-4: clamp(2.4rem, 7vw, 4.6rem);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0E1322; --surface: #151C31; --ink: #E7EBF5; --muted: #9AA3BF; --line: #28314C;
+    --sakura: #F08AAA; --sakura-soft: #3E2232;
+    --s3: #E07597; --s2: #4C6099; --s1: #263052; --s0: #181F35;
+    --s3-fg: #1A0C12; --s2-fg: #EEF1FA; --s1-fg: #B9C2DE; --s0-fg: #5E6788;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0E1322; --surface: #151C31; --ink: #E7EBF5; --muted: #9AA3BF; --line: #28314C;
+  --sakura: #F08AAA; --sakura-soft: #3E2232;
+  --s3: #E07597; --s2: #4C6099; --s1: #263052; --s0: #181F35;
+  --s3-fg: #1A0C12; --s2-fg: #EEF1FA; --s1-fg: #B9C2DE; --s0-fg: #5E6788;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  padding-inline: clamp(16px, 4vw, 48px);
+  padding-block: 0 64px;
+}
+.wrap { max-width: 1120px; margin-inline: auto; }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+h2 { font-family: var(--font-display); font-weight: 400; font-size: var(--step-3); line-height: 1.15; letter-spacing: -0.01em; }
+h3 { font-size: var(--step-1); font-weight: 700; line-height: 1.3; }
+p { margin: 0; }
+a { color: inherit; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--sakura); outline-offset: 3px; border-radius: 4px; }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.label { font-family: var(--font-mono); font-size: var(--step--1); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+
+/* Nav */
+.nav {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+  margin-inline: calc(-1 * clamp(16px, 4vw, 48px));
+  padding: 12px clamp(16px, 4vw, 48px);
+}
+.nav .wrap { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+.brand { font-family: var(--font-display); font-size: 1.1rem; text-decoration: none; letter-spacing: -0.01em; }
+.brand b { color: var(--sakura); font-weight: 400; }
+.crumb { color: var(--muted); font-size: var(--step--1); }
+.nav ul { display: flex; gap: 18px; list-style: none; margin: 0 0 0 auto; padding: 0; flex-wrap: wrap; font-size: var(--step--1); }
+.nav ul a { text-decoration: none; color: var(--muted); }
+.nav ul a:hover { color: var(--ink); }
+@media (max-width: 760px) { .nav ul { display: none; } }
+
+/* Hero */
+.hero { padding-block: 56px 40px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 40px 56px; align-items: start; }
+.hero-text { min-width: 0; display: grid; gap: 20px; }
+.kanji-tag { display: flex; align-items: baseline; gap: 12px; }
+.kanji-tag span:first-child { font-family: var(--font-display); font-size: 1.4rem; color: var(--sakura); }
+.hero h1 { font-family: var(--font-display); font-weight: 400; font-size: var(--step-4); line-height: 1.02; letter-spacing: -0.02em; }
+.hero h1 em { font-style: normal; color: var(--sakura); }
+.hero .lede { font-size: var(--step-1); color: var(--muted); max-width: 34em; line-height: 1.5; }
+.avoid-chip { display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); font-size: var(--step--1); width: fit-content; }
+.avoid-chip i { width: 10px; height: 10px; border-radius: 50%; background: var(--s0-fg); display: inline-block; }
+
+.score { display: grid; justify-items: center; gap: 10px; padding: 24px 28px; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; }
+.score svg { width: 168px; height: 168px; display: block; }
+.score .big { font-family: var(--font-display); font-size: 2.6rem; fill: var(--ink); }
+.score .small { font-family: var(--font-mono); font-size: 0.8rem; fill: var(--muted); }
+.subscores { display: grid; grid-template-columns: auto auto; gap: 4px 16px; font-size: var(--step--1); width: 100%; }
+.subscores dt { color: var(--muted); }
+.subscores dd { margin: 0; text-align: right; }
+@media (max-width: 760px) { .hero { grid-template-columns: 1fr; } .score { justify-self: stretch; } }
+
+/* Year strip */
+.year { grid-column: 1 / -1; display: grid; gap: 10px; }
+.strip { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 4px; }
+.strip a {
+  display: grid; gap: 2px; justify-items: center; padding: 12px 2px 10px; border-radius: 8px;
+  text-decoration: none; font-family: var(--font-mono); font-size: var(--step--1);
+  transition: transform .15s ease;
+}
+.strip a:hover { transform: translateY(-2px); }
+.strip a b { font-size: 1rem; font-weight: 500; }
+.v3 { background: var(--s3); color: var(--s3-fg); }
+.v2 { background: var(--s2); color: var(--s2-fg); }
+.v1 { background: var(--s1); color: var(--s1-fg); }
+.v0 { background: var(--s0); color: var(--s0-fg); }
+.legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: var(--step--1); color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+@media (max-width: 520px) { .strip a { padding: 10px 0 8px; } .strip a span { display: none; } }
+
+/* Sections */
+section { padding-block: 56px; border-top: 1px solid var(--line); }
+.sec-head { display: grid; gap: 10px; margin-bottom: 28px; max-width: 46em; }
+.sec-head p { color: var(--muted); }
+
+/* Month by month */
+.unit-toggle { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; width: fit-content; }
+.unit-toggle button { font: inherit; font-family: var(--font-mono); font-size: var(--step--1); padding: 6px 14px; border: 0; background: transparent; color: var(--muted); cursor: pointer; }
+.unit-toggle button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.months { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+.month { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; display: grid; gap: 10px; align-content: start; scroll-margin-top: 80px; }
+.month:target { outline: 2px solid var(--sakura); }
+.month-top { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.month-top h3 { display: flex; align-items: baseline; gap: 10px; }
+.month-top h3 small { font-family: var(--font-display); font-weight: 400; font-size: 0.95rem; color: var(--muted); }
+.pill { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; white-space: nowrap; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; font-size: var(--step--1); }
+.stats div { display: grid; }
+.stats dt { color: var(--muted); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.stats dd { margin: 0; font-family: var(--font-mono); font-variant-numeric: tabular-nums; font-size: 0.95rem; }
+.bar { height: 6px; border-radius: 3px; background: var(--s0); overflow: hidden; }
+.bar span { display: block; height: 100%; border-radius: 3px; }
+.month p { font-size: 0.92rem; color: var(--muted); line-height: 1.5; }
+.footnote { margin-top: 16px; font-size: var(--step--1); color: var(--muted); }
+
+/* Chart */
+.chart-box { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-bottom: 20px; overflow-x: auto; }
+.chart-box svg { display: block; width: 100%; min-width: 560px; height: auto; }
+.chart-box text { font-family: var(--font-mono); font-size: 11px; fill: var(--muted); }
+
+/* Cities */
+.table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+table { border-collapse: collapse; width: 100%; min-width: 760px; }
+th, td { padding: 8px 4px; text-align: center; }
+thead th { font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); font-weight: 400; border-bottom: 1px solid var(--line); padding-block: 12px; }
+tbody th { text-align: left; padding: 12px 16px; font-weight: 400; min-width: 210px; }
+tbody th b { display: block; font-weight: 700; }
+tbody th small { color: var(--muted); font-size: 0.82rem; line-height: 1.35; display: block; }
+tbody tr + tr > * { border-top: 1px solid var(--line); }
+td .cell { display: block; height: 30px; border-radius: 6px; }
+td:last-child { padding-right: 16px; }
+
+/* Seasons */
+.seasons { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+.season { display: grid; gap: 14px; align-content: start; padding: 22px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); }
+.season .when { font-family: var(--font-display); font-size: var(--step-2); line-height: 1.1; color: var(--sakura); }
+.season ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: 0.92rem; }
+.season li { display: grid; grid-template-columns: 7.5em minmax(0, 1fr); gap: 10px; }
+.season li .mono { color: var(--muted); font-size: 0.82rem; padding-top: 2px; }
+.season .tip { font-size: 0.9rem; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 12px; }
+.peaks { margin-top: 20px; padding: 18px 22px; border-radius: 14px; background: var(--sakura-soft); display: grid; gap: 8px; }
+.peaks ul { margin: 0; padding-left: 1.2em; display: grid; gap: 4px; }
+
+/* Route */
+.route-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 32px; align-items: start; }
+@media (max-width: 860px) { .route-grid { grid-template-columns: 1fr; } }
+.line { list-style: none; margin: 0; padding: 0; position: relative; }
+.line::before { content: ""; position: absolute; left: 11px; top: 14px; bottom: 14px; width: 4px; border-radius: 2px; background: var(--s2); }
+.stop { position: relative; padding-left: 44px; padding-bottom: 8px; }
+.stop::before { content: ""; position: absolute; left: 3px; top: 6px; width: 20px; height: 20px; border-radius: 50%; background: var(--surface); border: 4px solid var(--ink); }
+.stop-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.stop-head .label { color: var(--sakura); }
+.stop p { color: var(--muted); font-size: 0.95rem; margin-top: 4px; }
+.leg { position: relative; padding: 10px 0 18px 44px; font-family: var(--font-mono); font-size: var(--step--1); color: var(--muted); }
+.leg span { background: var(--paper); padding: 3px 8px; border: 1px solid var(--line); border-radius: 6px; display: inline-block; }
+.side { display: grid; gap: 16px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px; display: grid; gap: 12px; }
+.fares { width: 100%; min-width: 0; font-size: 0.9rem; }
+.fares td, .fares th { text-align: left; padding: 6px 0; border: 0; }
+.fares td:last-child, .fares th:last-child { text-align: right; padding-right: 0; }
+.fares tfoot td { border-top: 1px solid var(--line); font-weight: 700; padding-top: 10px; }
+
+/* Shinkansen */
+.steps { counter-reset: step; list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.steps li { counter-increment: step; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 16px; padding: 20px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); }
+.steps li::before { content: counter(step); font-family: var(--font-display); font-size: 1.6rem; line-height: 1; color: var(--sakura); width: 1.2em; }
+.steps h3 { font-size: 1.05rem; margin-bottom: 6px; }
+.steps p, .steps ul { font-size: 0.93rem; color: var(--muted); }
+.steps ul { margin: 6px 0 0; padding-left: 1.1em; display: grid; gap: 3px; }
+.steps strong { color: var(--ink); font-weight: 500; }
+.trains { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 20px; }
+.train { padding: 16px 18px; border-left: 4px solid var(--s2); background: var(--surface); border-radius: 0 10px 10px 0; display: grid; gap: 4px; }
+.train:first-child { border-left-color: var(--sakura); }
+.train b { font-family: var(--font-display); font-weight: 400; font-size: 1.2rem; }
+.train span { font-size: 0.9rem; color: var(--muted); }
+
+footer { border-top: 1px solid var(--line); padding-top: 28px; color: var(--muted); font-size: var(--step--1); display: grid; gap: 8px; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<nav class="nav" aria-label="Page">
+  <div class="wrap">
+    <a class="brand" href="#top">gowhere<b>and</b>when</a>
+    <span class="crumb">Asia / Japan</span>
+    <ul>
+      <li><a href="#months">Months</a></li>
+      <li><a href="#cities">Cities</a></li>
+      <li><a href="#seasons">Seasons</a></li>
+      <li><a href="#route">2-week route</a></li>
+      <li><a href="#shinkansen">Shinkansen</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="wrap" id="top">
+  <header class="hero">
+    <div class="hero-text">
+      <div class="kanji-tag"><span>日本</span><span class="label">Best time to visit Japan</span></div>
+      <h1>Go late March to May, <em>or November.</em></h1>
+      <p class="lede">Spring brings cherry blossom and dry, mild days. November brings red maples and clear skies. Both are comfortable for long days of walking.</p>
+      <p class="avoid-chip"><i></i>Avoid August to October: heat, humidity and typhoon season</p>
+    </div>
+
+    <aside class="score" aria-label="Weather score">
+      <span class="label">Weather score</span>
+      <svg viewBox="0 0 168 168" role="img" aria-label="9.3 out of 10 in the best months">
+        <circle cx="84" cy="84" r="70" fill="none" stroke="var(--s0)" stroke-width="12"/>
+        <circle cx="84" cy="84" r="70" fill="none" stroke="var(--sakura)" stroke-width="12" stroke-linecap="round"
+          stroke-dasharray="409 440" transform="rotate(-90 84 84)"/>
+        <text x="84" y="92" text-anchor="middle" class="big">9.3</text>
+        <text x="84" y="116" text-anchor="middle" class="small">/ 10 · best months</text>
+      </svg>
+      <dl class="subscores mono">
+        <dt>Temperature</dt><dd>9.5</dd>
+        <dt>Dry days</dt><dd>8.8</dd>
+        <dt>Humidity</dt><dd>9.6</dd>
+        <dt>Year average</dt><dd>6.4</dd>
+      </dl>
+    </aside>
+
+    <div class="year">
+      <nav class="strip" id="strip" aria-label="Verdict by month"></nav>
+      <div class="legend">
+        <span><i class="v3"></i>Best</span>
+        <span><i class="v2"></i>Good</span>
+        <span><i class="v1"></i>Fine, with trade-offs</span>
+        <span><i class="v0"></i>Avoid</span>
+      </div>
+    </div>
+  </header>
+
+  <section id="months">
+    <div class="sec-head">
+      <span class="label">Month by month</span>
+      <h2>What the weather does all year</h2>
+      <p>Figures are for Tokyo, which is close to Kyoto and Osaka. Hokkaido runs about 8°C colder and Okinawa about 7°C warmer.</p>
+      <div class="unit-toggle" role="group" aria-label="Temperature unit">
+        <button type="button" id="unit-c" aria-pressed="true">°C</button>
+        <button type="button" id="unit-f" aria-pressed="false">°F</button>
+      </div>
+    </div>
+    <div class="chart-box"><svg id="chart" viewBox="0 0 720 220" role="img" aria-label="Tokyo average high temperature and monthly rainfall"></svg></div>
+    <div class="months" id="month-grid"></div>
+    <p class="footnote">Averages are rounded from Japan Meteorological Agency climate normals, 1991–2020. Weather score combines temperature comfort, rainy days, humidity and typhoon risk.</p>
+  </section>
+
+  <section id="cities">
+    <div class="sec-head">
+      <span class="label">City by city</span>
+      <h2>Best time for each city</h2>
+      <p>Japan is 3,000 km long, so the timing shifts. Hokkaido is at its best in summer, when Honshu is too hot. Okinawa is good in early spring and late autumn but sits in the typhoon path from July to September.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col" style="text-align:left;padding-left:16px">City</th></tr></thead>
+        <tbody id="city-rows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="seasons">
+    <div class="sec-head">
+      <span class="label">Plan around a season</span>
+      <h2>Cherry blossom, autumn leaves, snow and quiet</h2>
+      <p>Blossom moves north through spring and the leaves move south through autumn. Forecasts are published from January (sakura) and September (koyo), so set your exact dates once they are out.</p>
+    </div>
+    <div class="seasons">
+      <article class="season">
+        <span class="label">Cherry blossom · 桜</span>
+        <p class="when">Late March to early April</p>
+        <ol>
+          <li><span class="mono">Late Jan–Feb</span><span>Okinawa</span></li>
+          <li><span class="mono">Mar 22–Apr 5</span><span>Tokyo, Kyoto, Osaka, Hiroshima</span></li>
+          <li><span class="mono">Mid–late Apr</span><span>Tohoku (Hirosaki, Kakunodate)</span></li>
+          <li><span class="mono">Early May</span><span>Sapporo and Hakodate</span></li>
+        </ol>
+        <p class="tip">Full bloom lasts about a week. Book a 10-day window in Tokyo or Kyoto and you will almost certainly catch it.</p>
+      </article>
+      <article class="season">
+        <span class="label">Autumn leaves · 紅葉</span>
+        <p class="when">Mid-November to early December</p>
+        <ol>
+          <li><span class="mono">Mid–late Sep</span><span>Daisetsuzan, Hokkaido</span></li>
+          <li><span class="mono">Mid–late Oct</span><span>Nikko, Japanese Alps</span></li>
+          <li><span class="mono">Early–mid Nov</span><span>Hakone, Mt Fuji lakes</span></li>
+          <li><span class="mono">Nov 15–Dec 5</span><span>Tokyo, Kyoto, Osaka</span></li>
+        </ol>
+        <p class="tip">Kyoto temples such as Eikando and Tofuku-ji peak around the last week of November. Go at opening time.</p>
+      </article>
+      <article class="season">
+        <span class="label">Skiing · スキー</span>
+        <p class="when">Mid-January to February</p>
+        <ol>
+          <li><span class="mono">Dec–Mar</span><span>Season open at most resorts</span></li>
+          <li><span class="mono">Jan–Feb</span><span>Deepest powder: Niseko, Furano, Rusutsu</span></li>
+          <li><span class="mono">Jan–Mar</span><span>Hakuba and Nozawa Onsen, 3 hours from Tokyo</span></li>
+        </ol>
+        <p class="tip">Niseko averages around 14 m of snow a season. Book lodging by September for January stays.</p>
+      </article>
+      <article class="season">
+        <span class="label">Smaller crowds · 静か</span>
+        <p class="when">Late January, February, early June, early December</p>
+        <ol>
+          <li><span class="mono">Mid Jan–Feb</span><span>Coldest but driest; hotel prices drop</span></li>
+          <li><span class="mono">May 10–Jun 5</span><span>After Golden Week, before the rainy season</span></li>
+          <li><span class="mono">Dec 1–20</span><span>Late leaves in Kyoto, winter lights in Tokyo</span></li>
+        </ol>
+        <p class="tip">Lunar New Year (late Jan or Feb) and the Sapporo Snow Festival (early Feb) are busy exceptions.</p>
+      </article>
+    </div>
+    <div class="peaks">
+      <span class="label">Dates to work around</span>
+      <ul>
+        <li><strong>Golden Week, April 29 to May 5.</strong> Japan's biggest holiday. Trains and hotels sell out and prices double.</li>
+        <li><strong>Obon, around August 13 to 16.</strong> Families travel home and shinkansen seats go fast.</li>
+        <li><strong>New Year, December 28 to January 3.</strong> Many shops and museums close; temples are packed.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="route">
+    <div class="sec-head">
+      <span class="label">Suggested route · 14 days</span>
+      <h2>Tokyo to Osaka in two weeks</h2>
+      <p>Fly into Tokyo and out of Osaka (Kansai airport) so you never backtrack. Every leg is a direct shinkansen ride. Send big bags ahead with a luggage forwarding service (takkyubin) for about ¥2,500 each.</p>
+    </div>
+    <div class="route-grid">
+      <ol class="line">
+        <li class="stop">
+          <div class="stop-head"><span class="label">Days 1–4</span><h3>Tokyo</h3></div>
+          <p>Asakusa and Senso-ji at dawn, Shibuya and Harajuku, teamLab, Shinjuku at night. Day trip to Nikko or Kamakura.</p>
+        </li>
+        <li class="leg"><span>Hikari or Kodama · 35 min · Tokyo → Odawara</span></li>
+        <li class="stop">
+          <div class="stop-head"><span class="label">Days 5–6</span><h3>Hakone</h3></div>
+          <p>A night in a ryokan with an onsen. Ride the Hakone loop: mountain railway, ropeway over Owakudani, boat across Lake Ashi. Mt Fuji views on clear mornings.</p>
+        </li>
+        <li class="leg"><span>Hikari · 2 h · Odawara → Kyoto</span></li>
+        <li class="stop">
+          <div class="stop-head"><span class="label">Days 7–10</span><h3>Kyoto</h3></div>
+          <p>Fushimi Inari before 8 am, Arashiyama bamboo grove, Gion in the evening, Kiyomizu-dera. Half-day trip to Nara to see Todai-ji and the deer.</p>
+        </li>
+        <li class="leg"><span>Nozomi · 1 h 40 min · Kyoto → Hiroshima</span></li>
+        <li class="stop">
+          <div class="stop-head"><span class="label">Day 11</span><h3>Hiroshima and Miyajima</h3></div>
+          <p>Peace Memorial Park and museum, then the ferry to Miyajima. Stay on the island to see the floating torii gate after the day-trippers leave.</p>
+        </li>
+        <li class="leg"><span>Nozomi · 1 h 25 min · Hiroshima → Shin-Osaka</span></li>
+        <li class="stop">
+          <div class="stop-head"><span class="label">Days 12–14</span><h3>Osaka</h3></div>
+          <p>Street food in Dotonbori and Kuromon Market, Osaka Castle, Shinsekai. Day 14: the Haruka express reaches Kansai airport in about 50 minutes.</p>
+        </li>
+      </ol>
+      <div class="side">
+        <div class="card">
+          <span class="label">Nights</span>
+          <table class="fares">
+            <tbody>
+              <tr><td>Tokyo</td><td class="mono">4</td></tr>
+              <tr><td>Hakone</td><td class="mono">2</td></tr>
+              <tr><td>Kyoto</td><td class="mono">4</td></tr>
+              <tr><td>Miyajima</td><td class="mono">1</td></tr>
+              <tr><td>Osaka</td><td class="mono">2</td></tr>
+            </tbody>
+            <tfoot><tr><td>Total</td><td class="mono">13</td></tr></tfoot>
+          </table>
+        </div>
+        <div class="card">
+          <span class="label">Rail fares, reserved seat</span>
+          <table class="fares">
+            <tbody>
+              <tr><td>Tokyo → Odawara</td><td class="mono">≈ ¥3,800</td></tr>
+              <tr><td>Odawara → Kyoto</td><td class="mono">≈ ¥11,500</td></tr>
+              <tr><td>Kyoto → Hiroshima</td><td class="mono">≈ ¥11,600</td></tr>
+              <tr><td>Hiroshima → Osaka</td><td class="mono">≈ ¥10,600</td></tr>
+            </tbody>
+            <tfoot><tr><td>Total</td><td class="mono">≈ ¥37,500</td></tr></tfoot>
+          </table>
+          <p style="font-size:0.9rem;color:var(--muted)">A 14-day JR Pass costs ¥80,000, so single tickets are much cheaper for this route. The pass only pays off if you add long trips such as Tokyo to Hokkaido.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="shinkansen">
+    <div class="sec-head">
+      <span class="label">First-timer's guide · 新幹線</span>
+      <h2>How to book a shinkansen ticket</h2>
+      <p>The bullet train is easier than it looks. On the Tokyo–Kyoto–Osaka–Hiroshima line there are three kinds of train. All of them use the same tracks and the same tickets; only the number of stops changes.</p>
+    </div>
+    <div class="trains">
+      <div class="train"><b>Nozomi</b><span>Fastest. Tokyo–Kyoto in 2 h 15 min. Runs every few minutes.</span></div>
+      <div class="train"><b>Hikari</b><span>A few more stops. Tokyo–Kyoto in about 2 h 40 min. Stops at Odawara.</span></div>
+      <div class="train"><b>Kodama</b><span>Stops everywhere. Use it only for short hops.</span></div>
+    </div>
+    <ol class="steps">
+      <li>
+        <div>
+          <h3>Pick your train and time</h3>
+          <p>Look up times on <strong>Google Maps</strong> or <strong>Navitime</strong>. For most trips, take the next Nozomi. Allow 20 minutes to get through a big station like Tokyo or Shinjuku.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h3>Book online with smartEX</h3>
+          <p>The <strong>smartEX</strong> app (by JR Central) sells tickets for Tokyo to Kyoto, Osaka, Hiroshima and Fukuoka in English with a foreign credit card.</p>
+          <ul>
+            <li>Bookings open one month ahead at 10 am Japan time.</li>
+            <li>You can change the time for free before departure.</li>
+            <li>For other lines (to Kanazawa, Sendai, Hokkaido), use JR East's online booking site.</li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h3>Or buy at the station</h3>
+          <p>Use the red or green <strong>ticket machines</strong>, which have an English button and take cards and cash. If you need help, go to the ticket office, marked <strong>みどりの窓口</strong> (Midori no Madoguchi). Write your destination, date and time on paper to show the staff.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h3>Choose reserved or non-reserved</h3>
+          <p>A reserved seat costs about ¥500 to ¥900 more and is worth it. Non-reserved cars (usually cars 1–3) are first come, first served.</p>
+          <ul>
+            <li>During Golden Week, Obon and New Year, Nozomi trains are reserved-only.</li>
+            <li>Going west from Tokyo, pick seat <strong>E</strong> (right side, window) to see Mt Fuji about 40 minutes out.</li>
+          </ul>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h3>Reserve space for large luggage</h3>
+          <p>On the Tokaido, Sanyo and Kyushu lines, a bag whose length, width and height add up to more than 160 cm needs a <strong>seat with an oversized baggage area</strong>. Book it when you buy your ticket. It costs nothing extra, but bringing the bag without a booking costs ¥1,000.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h3>Go through the gate</h3>
+          <p>You may get two paper tickets, a base fare and an express ticket. <strong>Insert them together</strong> into the gate and take them back out; you will need them again to exit. With smartEX, tap the IC card (such as Suica) you linked in the app, or scan the QR code.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h3>Find your car and board</h3>
+          <p>Car numbers are marked on the platform floor and on signs above. Queue in the lane for your car. Trains leave to the second and stop for about a minute, so be at the platform 5 minutes early.</p>
+        </div>
+      </li>
+      <li>
+        <div>
+          <h3>On board</h3>
+          <p>Eating is fine, so buy an <strong>ekiben</strong> (station bento) before you board. Turn your seat row around to face friends. Take phone calls in the area between cars.</p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <footer>
+    <p><strong style="color:var(--ink)">gowhereandwhen</strong> tells you the best time to visit a country.</p>
+    <p>Climate figures are rounded long-term averages. Bloom and foliage dates shift by a week or more each year. Fares are approximate and were checked for 2026.</p>
+  </footer>
+</main>
+
+<script>
+(function () {
+  const MONTHS = [
+    { m: "January",   k: "1月", hi: 10, lo: 1,  rain: 52,  days: 5,  score: 6.5, v: 1, note: "Cold, dry and sunny. Clear Fuji views and quiet sights after the New Year rush. Peak ski season in Hokkaido." },
+    { m: "February",  k: "2月", hi: 11, lo: 2,  rain: 56,  days: 6,  score: 6.5, v: 1, note: "Still cold and dry. Plum blossom starts late in the month. Sapporo Snow Festival draws crowds in early February." },
+    { m: "March",     k: "3月", hi: 14, lo: 5,  rain: 118, days: 10, score: 8.0, v: 2, note: "Warming fast. Cherry blossom opens in Tokyo and Kyoto around the 22nd. The last week is when the best window starts." },
+    { m: "April",     k: "4月", hi: 19, lo: 10, rain: 125, days: 10, score: 9.5, v: 3, note: "Peak blossom in the first week, then fresh green and mild days. Book early; Golden Week begins on the 29th." },
+    { m: "May",       k: "5月", hi: 23, lo: 15, rain: 138, days: 10, score: 9.3, v: 3, note: "Warm, sunny and low humidity. Avoid the first five days (Golden Week). Mid-May is one of the best weeks of the year." },
+    { m: "June",      k: "6月", hi: 26, lo: 19, rain: 168, days: 12, score: 5.0, v: 1, note: "Rainy season (tsuyu) from about June 7. Grey, humid days, but hydrangeas bloom and Hokkaido stays dry." },
+    { m: "July",      k: "7月", hi: 30, lo: 23, rain: 154, days: 11, score: 4.5, v: 1, note: "Rains end mid-month, then heat and humidity build. Festival season, and Mt Fuji opens for climbing." },
+    { m: "August",    k: "8月", hi: 31, lo: 24, rain: 168, days: 8,  score: 3.0, v: 0, note: "Hottest month with humidity near 75%. Heat warnings are common. Obon week fills trains and hotels." },
+    { m: "September", k: "9月", hi: 27, lo: 21, rain: 210, days: 12, score: 3.5, v: 0, note: "Peak typhoon month and the wettest of the year. Storms can cancel flights and trains for a day or two." },
+    { m: "October",   k: "10月", hi: 22, lo: 15, rain: 198, days: 10, score: 5.5, v: 0, note: "Typhoon risk lingers into mid-month and leaves have not turned in the cities yet. Late October is much better than early." },
+    { m: "November",  k: "11月", hi: 17, lo: 9,  rain: 93,  days: 7,  score: 9.2, v: 3, note: "Crisp, clear and dry. Autumn colours reach Tokyo and Kyoto in the second half. The best month of the autumn." },
+    { m: "December",  k: "12月", hi: 12, lo: 4,  rain: 51,  days: 5,  score: 6.8, v: 2, note: "Cool and sunny. Kyoto's last maples hang on into the first week. Winter illuminations across Tokyo. Quiet until Christmas." }
+  ];
+  const VERDICT = ["Avoid", "Fine", "Good", "Best"];
+  const SHORT = ["J","F","M","A","M","J","J","A","S","O","N","D"];
+
+  // Months as 0..3: avoid, fine, good, best
+  const CITIES = [
+    { name: "Tokyo",            note: "Spring blossom and November leaves. Hot and sticky July–Sept.", v: [1,1,2,3,3,0,0,0,0,1,3,2] },
+    { name: "Kyoto",            note: "Early April and late November. Gets very busy in both.",           v: [1,1,2,3,2,0,0,0,0,1,3,2] },
+    { name: "Osaka",            note: "Same rhythm as Kyoto, slightly warmer.",                            v: [1,1,2,3,2,0,0,0,0,1,3,1] },
+    { name: "Hiroshima & Miyajima", note: "April and November. Mild winters.",                            v: [1,1,2,3,2,0,0,0,0,2,3,1] },
+    { name: "Hakone & Mt Fuji", note: "Clearest Fuji views Nov–Feb. Summer is hazy.",                      v: [2,2,2,2,3,0,1,0,0,2,3,3] },
+    { name: "Kanazawa",         note: "April blossom at Kenroku-en. Snowy, grey winters.",                 v: [1,1,1,3,2,0,1,0,1,2,3,1] },
+    { name: "Sapporo & Hokkaido", note: "Summer escape with no rainy season. Feb for snow and skiing.",     v: [2,3,1,1,2,3,3,2,2,2,1,1] },
+    { name: "Okinawa",          note: "Spring and late autumn. Rainy May–June, typhoons Jul–Sep.",         v: [2,2,3,3,1,1,1,0,0,2,3,2] }
+  ];
+
+  let unit = "C";
+  try { unit = localStorage.getItem("gww-unit") || "C"; } catch (e) {}
+  const t = c => unit === "C" ? c + "°" : Math.round(c * 9 / 5 + 32) + "°";
+
+  // Year strip
+  const strip = document.getElementById("strip");
+  strip.innerHTML = MONTHS.map((d, i) =>
+    `<a href="#m-${i}" class="v${d.v}" title="${d.m}: ${VERDICT[d.v]}"><b>${SHORT[i]}</b><span>${VERDICT[d.v]}</span></a>`
+  ).join("");
+
+  // Month cards
+  const grid = document.getElementById("month-grid");
+  function renderMonths() {
+    grid.innerHTML = MONTHS.map((d, i) => `
+      <article class="month" id="m-${i}">
+        <div class="month-top">
+          <h3>${d.m}<small>${d.k}</small></h3>
+          <span class="pill v${d.v}">${VERDICT[d.v]}</span>
+        </div>
+        <dl class="stats">
+          <div><dt>High / low</dt><dd>${t(d.hi)} / ${t(d.lo)}</dd></div>
+          <div><dt>Rain</dt><dd>${d.rain} mm</dd></div>
+          <div><dt>Score</dt><dd>${d.score.toFixed(1)}</dd></div>
+        </dl>
+        <div class="bar" aria-hidden="true"><span class="v${d.v}" style="width:${d.score * 10}%"></span></div>
+        <p>${d.note}</p>
+      </article>`).join("");
+  }
+
+  // Chart: rainfall bars + high-temperature line, one shared x scale
+  const svg = document.getElementById("chart");
+  function renderChart() {
+    const W = 720, H = 220, L = 44, R = 44, T = 16, B = 30;
+    const cw = (W - L - R) / 12;
+    const x = i => L + cw * i + cw / 2;
+    const rainMax = 250, tMax = 35;
+    const yR = v => H - B - (v / rainMax) * (H - T - B);
+    const yT = v => H - B - (v / tMax) * (H - T - B);
+    let s = "";
+    [0, 10, 20, 30].forEach(v => {
+      s += `<line x1="${L}" x2="${W - R}" y1="${yT(v)}" y2="${yT(v)}" stroke="var(--line)" stroke-width="1"/>`;
+      s += `<text x="${L - 8}" y="${yT(v) + 4}" text-anchor="end">${unit === "C" ? v + "°C" : Math.round(v * 9 / 5 + 32) + "°F"}</text>`;
+    });
+    [0, 100, 200].forEach(v => {
+      s += `<text x="${W - R + 8}" y="${yR(v) + 4}">${v}mm</text>`;
+    });
+    MONTHS.forEach((d, i) => {
+      const bw = cw * 0.56;
+      s += `<rect x="${x(i) - bw / 2}" y="${yR(d.rain)}" width="${bw}" height="${H - B - yR(d.rain)}" rx="3" fill="var(--s${d.v})"/>`;
+      s += `<text x="${x(i)}" y="${H - 10}" text-anchor="middle">${SHORT[i]}</text>`;
+    });
+    const pts = MONTHS.map((d, i) => `${x(i)},${yT(d.hi)}`).join(" ");
+    s += `<polyline points="${pts}" fill="none" stroke="var(--ink)" stroke-width="2.5" stroke-linejoin="round"/>`;
+    MONTHS.forEach((d, i) => { s += `<circle cx="${x(i)}" cy="${yT(d.hi)}" r="3.5" fill="var(--ink)"/>`; });
+    s += `<text x="${L + 4}" y="${T + 2}" style="fill:var(--ink)">— Avg high</text><text x="${L + 92}" y="${T + 2}">▮ Rainfall, coloured by verdict</text>`;
+    svg.innerHTML = s;
+  }
+
+  // City table
+  const head = document.querySelector("#cities thead tr");
+  head.insertAdjacentHTML("beforeend", SHORT.map((s, i) => `<th scope="col" title="${MONTHS[i].m}">${s}</th>`).join(""));
+  document.getElementById("city-rows").innerHTML = CITIES.map(c => `
+    <tr>
+      <th scope="row"><b>${c.name}</b><small>${c.note}</small></th>
+      ${c.v.map((v, i) => `<td><span class="cell v${v}" title="${c.name}, ${MONTHS[i].m}: ${VERDICT[v]}"></span></td>`).join("")}
+    </tr>`).join("");
+
+  // Unit toggle
+  const bc = document.getElementById("unit-c"), bf = document.getElementById("unit-f");
+  function setUnit(u) {
+    unit = u;
+    bc.setAttribute("aria-pressed", u === "C");
+    bf.setAttribute("aria-pressed", u === "F");
+    try { localStorage.setItem("gww-unit", u); } catch (e) {}
+    renderMonths(); renderChart();
+  }
+  bc.addEventListener("click", () => setUnit("C"));
+  bf.addEventListener("click", () => setUnit("F"));
+  setUnit(unit);
+})();
+</script>

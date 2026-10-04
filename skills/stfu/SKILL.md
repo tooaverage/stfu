@@ -1,137 +1,79 @@
 ---
 name: stfu
-description: Makes website and product copy short, plain and free of AI tells. Grade 6 words, visuals over paragraphs, accessible and safe for search. Use when writing, rewriting or reviewing copy that ships (pages, UI text, onboarding, product emails, docs, empty states, errors), or when someone edits shipped copy, so the edit becomes a house rule.
+description: Writes and edits website and product copy so it's short, plain and free of AI tells, with every fact kept. Use whenever someone writes or changes copy that ships (landing pages, UI text, onboarding, error messages, empty states, product emails, help docs), asks to make copy shorter, clearer or "less AI", or asks to audit or review a page's copy, even if they don't name stfu. Not for chat replies, code comments or personal messages.
+license: MIT
+metadata:
+  author: Jaycee Day
+  version: 0.11.0
 ---
 
 # stfu
 
 Short, To-the-point, Friendly, Useful.
 
+People skim product copy. Every extra word costs attention, and every AI tell costs trust. This skill keeps copy short without losing what the reader came for.
+
 ## Before you write
 
-1. Read `.stfu.md` at the project root if it exists. Its rules override this file, except rules 8, 9 and 10.
-2. Get facts from the source (data, code, the person), never from memory.
+1. Read `.stfu.md` at the project root if it exists. Those are the team's house rules, and they win over this file, except that facts stay true.
+2. List what the page has to cover: every point in the brief, or every fact on the page you're editing. Short copy that drops what the reader needed is a failure, not a win. Detail can move into a "show more", but nothing on the list disappears.
+3. Get facts from the source (the brief, the code, the data, the person), never from memory.
 
-## The rules
+## How to write it
 
-**1. Cut first.** If a word, line or section can go without losing meaning, it goes.
+1. **Lead with the answer.** The first line of the page, and of each section, says what the reader came for. Setup comes after, if at all.
+2. **Say each thing once.** Repeats are the main reason pages run long. Keep the clearest version and cut the rest.
+3. **Keep it short and plain.** A headline is one line, about 10 words. A section intro is 1 to 2 sentences, or there isn't one. No paragraph runs past 3 lines. Use words a 12-year-old knows, unless the right word is harder ("typhoon"). Write whole sentences: clipped fragments and "Nov" mid-sentence are harder to read, not easier.
+4. **Show it when it has a shape.** Steps someone follows in order become a numbered list (1, 2, 3). Options compared on the same points become a table. A status becomes a badge with a text label. Ordinary notes stay sentences, because a page of bullets reads like a slide deck.
+5. **Be specific.** Real numbers, names and dates instead of "many" or "several". If a sentence could be pasted onto another product's page unchanged, it isn't saying anything: cut it or make it specific.
+6. **Sound like a person.** Contractions, "you", active voice. Plain words instead of idioms, since "move the needle" means nothing to a lot of readers.
+7. **Invite, don't push.** Buttons and links say what happens ("See pricing", not "Learn more"). No fake urgency.
+8. **Keep it true and findable.** Facts, prices and caveats stay accurate: shorten a caveat, never drop it. When editing a live page, keep the words people search for in the title, H1 and first paragraph.
+9. **Make it work for everyone.** Images get alt text that says what they show. Errors say what went wrong and how to fix it. Form fields have real labels. Prefer one `aria-label` to lots of hidden text, which makes the page longer and helps no one.
 
-**2. Grade 6 reading level.** Short, common words. Sentences under about 15 words. One idea per sentence. Use a harder word only when nothing simpler says it ("typhoon", "subscription").
+## AI tells to leave out
 
-**3. Visual first.** If it can be an icon, badge, table, chart, list or diagram, it isn't a paragraph. Write prose only if asked.
-- Comparisons and data: table or chart.
-- Status or rating: badge or color, with a text label.
-- Steps: numbered list or diagram.
-- Icons get a visible label.
-- Add a short line of text (about 8 words) only if the visual needs explaining. Also add one if a page that ranks in search needs the fact.
+Readers spot these at a glance and stop trusting the page:
 
-**4. Lead with the answer.** The most useful thing comes first.
+- Em dashes, and any dash used as a dramatic pause. In sentences, write ranges with "to" ("March 24 to April 7"). In tables, badges and labels an en dash is fine ("Mar 24–Apr 7").
+- Hype words: leverage, streamline, seamless, effortless, unlock, empower, elevate, supercharge, game-changing, revolutionize, robust, cutting-edge, delve, honestly, quietly, genuinely, solution, offering. They're fine when literal ("Unlock your account").
+- Eyebrow labels, the small label above a heading. The heading already does that job.
+- All caps, including text styled uppercase in CSS. Sentence case reads faster.
+- Emoji. Screen readers read them out ("green square"). Use the project's icon set (Lucide, Heroicons or whatever is installed) with a text label, or suggest adding one.
+- Colored or gradient words inside a headline.
+- Zero-padded steps (01, 02, 03). Use 1, 2, 3.
+- Setup-punchline hooks ("Short line. Fragment twist."), summary closers ("It's that simple."), balanced pairs ("X is fragmented, Y is unsolved."), narrating ("Let's dive in"), filler openers ("In today's fast-paced world") and put-downs of other products.
 
-**5. Be specific.** Real numbers, names and dates. Not "many" or "several" when you know the number.
+If the brand already uses caps, emoji or colored words, or the person asks for them, follow the brand.
 
-**6. Sound like a person.** Contractions, "you", active voice. Plain verbs: use, not utilize. Help, not facilitate. Idioms are fine.
+## Check your work
 
-**7. Friendly, never pushy.** "Try it free", not "Start now or miss out". No fake urgency.
+1. Run the checker from this skill's folder: `python3 <skill folder>/scripts/check.py <file>`. It catches the mechanical tells (dashes, caps, emoji, hype words, vague links, missing alt text) and very long sentences. It can be wrong about literal uses, so judge each flag.
+2. Grade the copy against [references/evals.md](references/evals.md). Each check is pass or fail. If you can start a subagent, give a fresh one only the page, the must-cover list and evals.md, so it grades what a stranger sees. Fix what fails and grade again, at most 3 rounds.
+3. Hand it over: the copy first, then at most two lines: anything you folded away or left out, and any fact to confirm. Don't describe your process.
 
-**8. Never change the truth.** Facts, numbers, prices, legal text and caveats stay accurate. You can shorten a caveat, not drop or soften it.
+## Editing or auditing an existing page
 
-**9. Don't break search.** When editing a live page:
-- Keep the words people search for in the title, H1 and first paragraph. Don't swap them for synonyms.
-- Keep sections that answer what people search for, even long ones.
-- Don't change URLs, slugs or headings other pages link to. Flag them instead.
-
-**10. Works for everyone.** Some people hear the page, zoom it, or read it out of order.
-- Link and button text makes sense alone: "See pricing", not "Learn more".
-- Don't point by color, shape or place: not "the green button". Name the thing.
-- Alt text says what the image shows or means. No "Image of". Decorative images get empty alt.
-- Errors say what went wrong and how to fix it: "Enter a date after today", not "Invalid input".
-- Form fields have real labels, not just placeholder text.
-
-## Never write these
-
-- **Em dashes.** Use a comma, colon, full stop or parentheses. Not an en dash or " - " either.
-- **Hype words:** honestly, quietly, leverage, streamline, seamless, effortless, unlock, empower, elevate, supercharge, game-changing, revolutionize, robust, cutting-edge, delve, solution (for a product), offering, "workflow" as a noun. Fine when literal ("Unlock your account").
-- **All caps,** including text the CSS turns uppercase (`text-transform: uppercase` on labels and eyebrows). Use sentence case. Acronyms like "FAQ" are fine.
-- **Zero-padded step numbers** ("01", "02", "03"). Use 1, 2, 3, or no numbers if the order doesn't matter.
-- **Eyebrow labels.** The small label above a heading ("Weather score" over "How good is the weather?"). Cut it. The heading does the job.
-- **Colored words in headlines.** One color for the whole headline. No accent-colored or gradient word or line.
-- **Emoji,** including as icons. Screen readers read them out loud ("green square"). Use the project's icon set instead (Lucide, Heroicons, Phosphor or whatever is installed), with a text label. If there's no icon set, drop the emoji and suggest adding one.
-- **Setup-punchline hooks.** "Short line. Fragment twist." Write one plain sentence.
-- **Summary closers.** "It's that simple." End on the useful fact.
-- **Tacked-on explaining.** "...which is why this matters." Say it once.
-- **Narrating.** "As you can see", "Let's dive in", "Here's the thing".
-- **Filler openers.** "In today's fast-paced world", "Whether you're X or Y", "Look no further".
-- **Put-downs** of other products or people.
-
-Caps, emoji and colored headline words are fine when asked, or when the brand already uses them.
-
-## Check before shipping
-
-The checker is in this skill's folder, not the project. Use the full path:
-
-```
-python3 <skill folder>/scripts/check.py path/to/file.md
-echo "draft text" | python3 <skill folder>/scripts/check.py -
-```
-
-It flags dashes, caps, emoji, hype words, vague links, missing alt text, long blocks and hard sentences, and prints an overall grade. From `.stfu.md` it reads `grade: N` as the target, and `not "word"` as a banned word. If you can't run it, check by hand.
-
-Fix every flag unless the word is literal or has no simpler swap. The overall grade must pass.
-
-## Rebuilding a page
-
-When someone asks to rebuild or redo a page, keep its branding (colors, fonts, spacing and the style of its components) and build the structure fresh from the content, with every rule above. Card grids can become tables, repeated sections merge, paragraphs become visuals.
-
-1. Save a copy of the page first.
-2. List the facts on the page. Each one appears once in the rebuild.
-3. Rules 8 and 9 still hold.
-
-## Editing an existing page
-
-Change the text only. Keep the layout, sections, components and look as they are.
-
-1. Save a copy of the page before you touch it.
-2. Tighten every line. Cut filler, hedges and anything the page already says somewhere else.
-3. Keep sentences whole and natural. Don't turn them into clipped fragments ("Forecasts from September") or abbreviate words in a sentence ("Nov"). Don't turn paragraphs into bullet points.
-4. Fix the never list, including caps and colored words set in the CSS.
-5. Run the checker with the copy: `check.py --before <copy> <page>`. It fails if less than 20% was cut, or if any block is over 25 words.
-6. Don't restructure. If the page would be much better with a different structure (cards that should be a table, sections that repeat each other), say so in one line after the copy, and suggest a rebuild: "Use stfu to rebuild this page with the same branding."
-
-Rules 8 and 9 still hold: keep every fact and the search words.
-
-## How to hand it over
-
-These rules apply to your reply too.
-
-- Copy first. Nothing before it.
-- One version. Options only when asked.
-- Don't report your process (checks run, files found). Mention a check only if it found a problem you couldn't fix.
-- After the copy, at most one line: a fact to confirm or a placeholder to fill.
+Read [references/editing.md](references/editing.md) first. Editing existing text pulls you into small tweaks that barely change the page, and that file has the steps that avoid it.
 
 ## House rules
 
-When someone edits your copy or says a line sounds off:
+When someone edits your copy or says a line sounds off, the edit is the data:
 
-1. Say in one line what changed ("cut the intro", "'use', not 'utilize'").
-2. If it's a pattern, not a one-off, add it to `.stfu.md` with the date. Ask if you can't tell.
-3. Fix the other places the rule applies, in the same change.
-4. Don't defend the original. The edit is the data.
+1. Say in one line what changed.
+2. If it's a pattern, add it to `.stfu.md` with the date. Write word swaps as `Say "trip", not "journey"` so the checker catches them.
+3. Fix the other places it applies.
 
-Write word swaps as `Say "X", not "Y"` so the checker catches them:
+## Examples
 
-```
-# House rules
+[references/examples.md](references/examples.md) has before and after pairs from real pages. Read it before writing a new page. One of them:
 
-grade: 6
+Before: "Whether you're planning a spring getaway or an autumn adventure, our comprehensive guides leverage monthly weather data to help you seamlessly identify the optimal time to visit. It's that simple."
 
-- 2026-09-28: Month notes stay under 12 words.
-- 2026-09-30: Say "trip", not "journey".
-```
+After: "Find the best month to go. Each guide shows the weather, month by month, for a real city." A 12-month chart replaces the rest.
 
-## Example
+## Troubleshooting
 
-Before (grade 11.5):
-> Whether you're planning a spring getaway or an autumn adventure, our comprehensive guides leverage monthly weather data to help you seamlessly identify the optimal time to visit. It's that simple.
-
-After (grade 1, plus a 12-month heatmap):
-> Find the best month to go. Each guide shows the weather, month by month, for a real city.
+- **The checker can't be found:** it's in this skill's folder, not the project. Use the full path.
+- **The page builds its text with JavaScript:** add `--render` to the checker to read the page as a browser shows it (needs Playwright). Otherwise check the text in the script by hand.
+- **Facts on the page contradict each other:** don't pick one. Flag it in your hand-over line.

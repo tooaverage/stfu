@@ -1,0 +1,17 @@
+{
+  "should_trigger": [
+    "write the hero copy for our pricing page",
+    "can you make this onboarding copy less wordy",
+    "this landing page reads like AI, fix it",
+    "write the error message for a failed payment",
+    "audit the copy on src/pages/about.tsx",
+    "rewrite the empty state for the projects list"
+  ],
+  "should_not_trigger": [
+    "fix the failing test in auth.spec.ts",
+    "reply to this DM from my friend",
+    "add comments to this function",
+    "what's the weather in Tokyo today",
+    "summarize this meeting transcript for me"
+  ]
+}
