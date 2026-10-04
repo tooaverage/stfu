@@ -11,7 +11,7 @@ This skill is for words that ship: website pages, product UI, onboarding, docs, 
 
 ## Before you write
 
-1. Look for a `.stfu.md` file at the project root. If it exists, read it. Its rules override everything below except rule 8.
+1. Look for a `.stfu.md` file at the project root. If it exists, read it. Its rules override everything below except rules 8 and 9.
 2. Get facts from the source (data, code, the person), never from memory.
 3. Ask: does this need words at all? If it can be a visual, make it a visual.
 
@@ -39,7 +39,13 @@ This skill is for words that ship: website pages, product UI, onboarding, docs, 
 
 **7. Keep it friendly, never pushy.** Calls to action invite: "Try it free", not "Start now or miss out". No fake urgency.
 
-**8. Never change the truth.** Facts, numbers, prices, legal text, caveats and search headings (H1s people search for) stay accurate. You can shorten a caveat. You can't drop it or soften what it means.
+**8. Never change the truth.** Facts, numbers, prices, legal text and caveats stay accurate. You can shorten a caveat. You can't drop it or soften what it means.
+
+**9. Don't break search.** When editing a live page, keep what it ranks for:
+- Keep the words people search for in the title, H1 and first paragraph. Shorten around them, don't swap them for synonyms.
+- Don't cut a section that answers a question people search for, even if it's long.
+- Keep key facts in real text. A chart or image can add to the text but not replace it.
+- Don't change URLs, slugs or headings other pages link to. Flag them instead.
 
 ## Never write these
 
