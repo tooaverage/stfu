@@ -40,7 +40,7 @@ BANNED = [
 # short sentences ("Your subscription renews automatically" scores 18), so
 # short sentences only count toward the overall grade.
 MAX_WORDS = 15
-HARD_MIN_WORDS = 8
+HARD_MIN_WORDS = 10
 HARD_MARGIN = 3
 
 
@@ -73,12 +73,15 @@ def strip_markup(text):
     text = re.sub(r"```.*?```", " ", text, flags=re.S)
     text = re.sub(r"`[^`]*`", " ", text)
     text = re.sub(r"<(script|style)[^>]*>.*?</\1>", " ", text, flags=re.S | re.I)
+    # Block tags end a sentence, so a heading never merges with the text under it.
+    text = re.sub(r"</?(p|div|section|article|header|footer|nav|main|aside|h[1-6]|li|ul|ol|dl|dt|dd|tr|td|th|table|br|figure|figcaption|blockquote|button|label)\b[^>]*>", "\n\n", text, flags=re.I)
     text = re.sub(r"<[^>]+>", " ", text)
     text = re.sub(r"!\[[^\]]*\]\([^)]*\)", " ", text)
     text = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", text)
     text = re.sub(r"https?://\S+", " ", text)
     text = re.sub(r"^\s{0,3}(#{1,6}|[-*+]|\d+\.|>)\s*", "", text, flags=re.M)
     text = re.sub(r"[*_|]", " ", text)
+    text = "\n".join(" ".join(line.split()) for line in text.splitlines())
     return text
 
 
