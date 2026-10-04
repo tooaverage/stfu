@@ -5,12 +5,13 @@ Starting from existing text makes you cautious: you keep its structure and nudge
 ## Edit
 
 1. Save a copy of the page. Note its look (fonts, colors, spacing, how cards and badges look) and keep it.
-2. List every fact on the page. That's the must-cover list.
+2. List every fact on the page. That's the must-cover list. Text built by JavaScript (data arrays, templates) is copy too, and usually most of it.
 3. Go section by section. Write the short version from the section's facts without looking at the old wording, then swap it in where it's clearer.
 4. Delete before you add: repeats, intros that restate the heading, labels nobody needs. Add only what a reader is missing.
-5. Inside a section you can change the form (steps to a numbered list, options to a table), built from styles the page already has. Leave the page layout, section order and look alone unless asked to rebuild.
-6. Check your work as SKILL.md describes, including the editing checks in evals.md. The page should look like the same site and be shorter on screen.
-7. If the real problem is the structure (sections that repeat each other, a grid of cards that should be one table), say so in one line and offer a rebuild.
+5. Inside a section you can change the form (steps to a numbered list, options to a table), built from styles the page already has. Detail that only some readers need can fold under a "More..." toggle, so it stays on the page without making it longer. Leave the page layout, section order and look alone unless asked to rebuild.
+6. Expect the page to come out about a third shorter on screen. If it doesn't, look again for repeats and for detail to fold before you hand it over. Never cut a fact to hit a number.
+7. Check your work as SKILL.md describes, including the editing checks in evals.md. Run `check.py --render --before <copy> <page>` to see the change on screen.
+8. If the real problem is the structure (sections that repeat each other, a grid of cards that should be one table), say so in one line and offer a rebuild.
 
 ## Audit
 

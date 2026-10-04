@@ -13,6 +13,15 @@ Short, To-the-point, Friendly, Useful.
 
 People skim product copy. Every extra word costs attention, and every AI tell costs trust. This skill keeps copy short without losing what the reader came for.
 
+## Start here
+
+Pick the job, and read its file before you do anything else:
+
+- **Writing new copy:** read [references/examples.md](references/examples.md).
+- **Editing, auditing or rebuilding a page that already exists:** read [references/editing.md](references/editing.md). Editing existing text pulls you into small tweaks that barely change the page, and that file has the steps that avoid it.
+
+Every job ends with the checks in [references/evals.md](references/evals.md).
+
 ## Before you write
 
 1. Read `.stfu.md` at the project root if it exists. Those are the team's house rules, and they win over this file, except that facts stay true.
@@ -49,12 +58,8 @@ If the brand already uses caps, emoji or colored words, or the person asks for t
 ## Check your work
 
 1. Run the checker from this skill's folder: `python3 <skill folder>/scripts/check.py <file>`. It catches the mechanical tells (dashes, caps, emoji, hype words, vague links, missing alt text) and very long sentences. It can be wrong about literal uses, so judge each flag.
-2. Grade the copy against [references/evals.md](references/evals.md). Each check is pass or fail. If you can start a subagent, give a fresh one only the page, the must-cover list and evals.md, so it grades what a stranger sees. Fix what fails and grade again, at most 3 rounds.
+2. Read [references/evals.md](references/evals.md) and answer every check, pass or fail. If you can start a subagent (the Task or Agent tool), give a fresh one only the page, the must-cover list and evals.md, so it grades what a stranger sees. Fix what fails and grade again, at most 3 rounds.
 3. Hand it over: the copy first, then at most two lines: anything you folded away or left out, and any fact to confirm. Don't describe your process.
-
-## Editing or auditing an existing page
-
-Read [references/editing.md](references/editing.md) first. Editing existing text pulls you into small tweaks that barely change the page, and that file has the steps that avoid it.
 
 ## House rules
 
@@ -66,7 +71,7 @@ When someone edits your copy or says a line sounds off, the edit is the data:
 
 ## Examples
 
-[references/examples.md](references/examples.md) has before and after pairs from real pages. Read it before writing a new page. One of them:
+[references/examples.md](references/examples.md) has before and after pairs from real pages. One of them:
 
 Before: "Whether you're planning a spring getaway or an autumn adventure, our comprehensive guides leverage monthly weather data to help you seamlessly identify the optimal time to visit. It's that simple."
 
