@@ -14,7 +14,7 @@ A skill that makes AI write copy people can read: website pages, product UI, onb
 | Keep every fact | Detail can fold into "show more". Nothing on the brief disappears. |
 | Works for everyone | Clear links, alt text, errors that say how to fix them. |
 
-It also leaves out the usual AI tells: em dashes, hype words, eyebrow labels, all caps, emoji, colored headline words and 01/02/03 steps.
+It also leaves out the usual AI tells: em dashes, hype words, eyebrow labels and other small all-caps text, emoji, colored headline words and 01/02/03 steps.
 
 ## Use it
 

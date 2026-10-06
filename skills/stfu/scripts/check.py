@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """stfu checker: flags the mechanical AI tells (em dashes, dashes used as a
-pause, all caps, emoji, hype words, eyebrow labels, 01/02/03 steps), vague
-links, images with no alt text and very long sentences.
+pause, small text in all caps, emoji, hype words, eyebrow labels, 01/02/03 steps, strings of
+very short sentences), vague links, images with no alt text and very long
+sentences.
 
 Usage:
   python3 check.py FILE [FILE ...]
@@ -139,13 +140,51 @@ def script_lines(raw):
     return out
 
 
+TITLE_SELECTOR = re.compile(r"\bh[12]\b|title|headline|hero|display|banner", re.I)
+
+
+def big_size(css):
+    """True when a CSS font-size is title-sized: 28px or 1.75rem and up, or a clamp() that ends there."""
+    m = re.search(r"font-size\s*:\s*([^;}]+)", css, flags=re.I)
+    if not m:
+        return False
+    sizes = re.findall(r"([\d.]+)\s*(px|rem|em)\b", m.group(1))
+    if not sizes:
+        return False
+    value, unit = sizes[-1]
+    return float(value) >= (28 if unit == "px" else 1.75)
+
+
+def title_caps(raw):
+    """How many times per line uppercase is set on a title. Caps are fine on titles; small labels in caps read as AI."""
+    count = {}
+    def add(pos):
+        line = raw.count("\n", 0, pos) + 1
+        count[line] = count.get(line, 0) + 1
+    for m in re.finditer(r"([^{}]*)\{([^{}]*)\}", raw):
+        selector, body = m.group(1), m.group(2)
+        t = re.search(r"text-transform\s*:\s*uppercase", body, flags=re.I)
+        if t and (TITLE_SELECTOR.search(selector) or big_size(body)):
+            add(m.start(2) + t.start())
+    for m in re.finditer(r"<(\w+)\b[^>]*\bclass(?:Name)?=\{?[\"'`]([^\"'`]*\buppercase\b[^\"'`]*)", raw):
+        tag, classes = m.group(1).lower(), m.group(2)
+        big = re.search(r"\btext-(?:[3-9]xl)\b", classes) or any(float(n) >= 28 for n in re.findall(r"\btext-\[([\d.]+)px\]", classes))
+        if tag in ("h1", "h2") or big:
+            add(m.start())
+    return count
+
+
 def markup_flags(name, raw):
     """Checks that need the source: CSS, classes, links, images."""
     flags = 0
+    titles = title_caps(raw)
     for i, line in enumerate(raw.splitlines(), 1):
         hits = []
-        if re.search(r"text-transform\s*:\s*uppercase", line, flags=re.I) or (re.search(r"\buppercase\b", line) and re.search(r"class(Name)?=", line)):
-            hits.append("uppercase style")
+        caps = len(re.findall(r"text-transform\s*:\s*uppercase", line, flags=re.I))
+        if re.search(r"class(Name)?=", line):
+            caps += len(re.findall(r"\bclass(?:Name)?=\{?[\"'`][^\"'`]*\buppercase\b", line))
+        if caps > titles.get(i, 0):
+            hits.append("uppercase on small text")
         if re.search(r"\[\s*" + VAGUE + r"\s*\]\(", line, flags=re.I) or re.search(r">\s*" + VAGUE + r"\s*</a>", line, flags=re.I):
             hits.append("vague link text")
         if re.search(r"<img\b(?![^>]*\balt\s*=)[^>]*>", line, flags=re.I) or re.search(r"!\[\s*\]\(", line):
@@ -160,8 +199,31 @@ def markup_flags(name, raw):
     return flags
 
 
-def prose_flags(name, lines, banned):
-    """Checks on the words people read. lines: (line number, text) pairs."""
+ABBREVIATION = re.compile(r"\b(?:Mt|St|Dr|Mr|Mrs|Ms|Jr|Sr|No|vs|etc|approx|e\.g|i\.e)\.$", re.I)
+
+
+def short_sentences(text):
+    """True when a line or element is only very short sentences, like "Same meaning. Fewer words."
+    Lines with numbers are skipped: "The limit is 25 MB." is a fact, not a hook."""
+    for part in re.split(r"<[^>]+>|\t|\|", text):  # each element, table cell or column on its own
+        part = re.sub(r"^[\s\-*>\"'“”‘’(]*(?:\d+[.)]\s+)?", "", part).strip(" \"'“”‘’)")
+        # Skip numbers, and the … that stands in for ${...} in JavaScript templates.
+        if not part or re.search(r"[\d…]", part):
+            continue
+        sents = []
+        for s in re.split(r"(?<=[.!?])\s+", part):
+            if sents and ABBREVIATION.search(sents[-1]):
+                sents[-1] += " " + s  # "Mt. Fuji" is one sentence
+            else:
+                sents.append(s)
+        if len(sents) >= 2 and all(s[-1] in ".!?" and 1 <= len(re.findall(r"[A-Za-z][\w'’-]*", s)) <= 4 for s in sents):
+            return True
+    return False
+
+
+def prose_flags(name, lines, banned, is_title=lambda i, text: False):
+    """Checks on the words people read. lines: (line number, text) pairs.
+    is_title says which lines are titles, where all caps is fine."""
     flags = 0
     for i, text in lines:
         found = []
@@ -169,12 +231,14 @@ def prose_flags(name, lines, banned):
             found.append("em dash")
         if PAUSE_DASH.search(text.lstrip(" -*>")):
             found.append("dash used as a pause")
-        if re.search(r"\b[A-Z]{2,}\b(?:[\s,:!.-]+\b[A-Z]{2,}\b)+", text):
+        if re.search(r"\b[A-Z]{2,}\b(?:[\s,:!.-]+\b[A-Z]{2,}\b)+", text) and not is_title(i, text):
             found.append("all caps")
         if EMOJI.search(text):
             found.append("emoji")
         if re.fullmatch(r"\s*0[1-9][.)]?\s*", text):
             found.append("zero-padded step number")
+        if short_sentences(text):
+            found.append("string of very short sentences")
         low = text.lower()
         found += [f"banned '{b}'" for b in banned if re.search(r"(?<![a-z])" + re.escape(b) + r"(?![a-z])", low)]
         for f in found:
@@ -196,7 +260,7 @@ def source_prose(raw):
             continue
         if i in in_script:
             # Strings only, and not the ${...} code inside template strings.
-            text = " ".join(re.sub(r"\$\{[^}]*\}", " ", g) for m in STRING.finditer(line) for g in m.groups() if g)
+            text = " ".join(re.sub(r"\$\{[^}]*\}", "…", g) for m in STRING.finditer(line) for g in m.groups() if g)
         else:
             text = re.sub(r"`[^`]*`", " ", line)
         if text.strip():
@@ -231,8 +295,13 @@ RENDER_JS = """() => {
   }
   hidden.forEach(([el]) => el.style.display = 'none');
   const text = document.body.innerText;
+  // Title-sized text (28px and up), where all caps is fine.
+  const titles = [];
+  for (const el of document.body.querySelectorAll('*')) {
+    if (parseFloat(getComputedStyle(el).fontSize) >= 28 && el.innerText) titles.push(...el.innerText.split('\\n').map(t => t.trim()).filter(Boolean));
+  }
   hidden.forEach(([el, d]) => el.style.display = d);
-  return {text, height: document.documentElement.scrollHeight};
+  return {text, titles, height: document.documentElement.scrollHeight};
 }"""
 
 
@@ -254,12 +323,14 @@ def render(path):
 def check(name, raw, target, banned, rendered=None):
     flags = markup_flags(name, raw)
     if rendered is None:
-        flags += prose_flags(name, source_prose(raw), banned)
+        headings = {i for i, line in enumerate(raw.splitlines(), 1) if re.search(r"<h[12]\b", line, flags=re.I) or re.match(r"#{1,2}\s", line)}
+        flags += prose_flags(name, source_prose(raw), banned, lambda i, text: i in headings)
         text = "\n".join(re.sub(r"<(script|style)[^>]*>.*?</\1>", " ", raw, flags=re.S | re.I).splitlines())
         flags += grade_flags(name, text, target)
     else:
         lines = [(f"rendered line {n}", t) for n, t in enumerate(rendered["text"].splitlines(), 1) if t.strip()]
-        flags += prose_flags(name, [(i, t) for i, t in lines], banned)
+        titles = set(rendered.get("titles", []))
+        flags += prose_flags(name, [(i, t) for i, t in lines], banned, lambda i, text: text.strip() in titles)
         flags += grade_flags(name, rendered["text"].replace("\n", "\n\n"), target)
         print(f"{name}: on screen {len(words_of(rendered['text']))} words, page height {rendered['height']}px")
     return flags

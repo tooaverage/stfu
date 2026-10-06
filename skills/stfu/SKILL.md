@@ -74,7 +74,7 @@ Readers spot these at a glance and stop trusting the page:
 - Softeners that promise ease: simply, just, easily, "in seconds".
 - Comparisons with a vague crowd: "most people", "everyone else", "unlike most", "nobody else".
 - Eyebrow labels, the small label above a heading. The heading already does that job.
-- All caps, including text styled uppercase in CSS. Sentence case reads faster.
+- Small text in all caps, like labels, tags and badges, including text styled uppercase in CSS. A big title in all caps is fine when it's part of the design.
 - Emoji. Screen readers read them out ("green square"). Use the project's icon set (Lucide, Heroicons or whatever is installed) with a text label, or suggest adding one.
 - Colored or gradient words inside a headline.
 - Zero-padded steps (01, 02, 03). Use 1, 2, 3.
@@ -87,7 +87,7 @@ These rules are about words, not the look. A page without eyebrows or colored wo
 ## Check your work
 
 1. Cut pass: delete every sentence the page works without, then every word each sentence works without. Count the words in each element against the budget.
-2. Run the checker from this skill's folder: `python3 <skill folder>/scripts/check.py <file>`. It catches the mechanical tells (dashes, caps, emoji, hype words, vague links, missing alt text) and very long sentences. It can be wrong about literal uses, so judge each flag.
+2. Run the checker from this skill's folder: `python3 <skill folder>/scripts/check.py <file>`. It catches the mechanical tells (dashes, caps, emoji, hype words, vague links, missing alt text), very long sentences, and strings of very short ones ("Same meaning. Fewer words."). It can be wrong about literal uses, so judge each flag.
 3. Read [references/evals.md](references/evals.md) and answer every check, pass or fail. If you can start a subagent (the Task or Agent tool), give a fresh one only the page, the must-cover list and evals.md, so it grades what a stranger sees. Fix what fails and grade again, at most 3 rounds.
 4. Hand it over. New copy: show it with the word count beside each element, then at most two lines on anything folded away or left out and any fact to confirm. Edits: list each changed element as in [references/editing.md](references/editing.md). Start with the first change, not a summary of what you did or which checks ran.
 
