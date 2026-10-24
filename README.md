@@ -40,6 +40,8 @@ In Claude Code you can also install it as a plugin:
 /plugin install stfu@stfu
 ```
 
+To get new versions on their own, turn on auto-update: run `/plugin`, open **Marketplaces**, pick **stfu** and choose **Enable auto-update**.
+
 For Claude.ai, zip the `skills/stfu` folder and upload it as a skill in Settings.
 
 ## Check your copy
