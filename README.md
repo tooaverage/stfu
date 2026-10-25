@@ -25,6 +25,14 @@ Two ways, depending on what you want:
 
 Each run grades itself against [references/evals.md](skills/stfu/references/evals.md), a list of pass/fail checks.
 
+## Examples
+
+- "Write the onboarding for a habit tracker: three screens, one goal each."
+- "Make this error shorter: 'An unexpected error occurred while processing your request. Please try again later.'"
+- "Use stfu on the settings screen in src/settings.tsx."
+
+See real before and after pairs in [examples/before-after.md](examples/before-after.md).
+
 ## Install
 
 ```
@@ -66,6 +74,25 @@ grade: 8
 ```
 
 `grade: 8` raises the target, for technical docs. `Say "X", not "Y"` adds Y to the banned words.
+
+## What it runs
+
+stfu doesn't collect data or send anything anywhere.
+
+- The skill is Markdown that tells your AI how to write.
+- `check.py` reads the files you name and prints what it flags. It never changes a file.
+- With `--render`, it opens the page in a browser on your computer, which loads whatever the page links to.
+
+## Troubleshooting
+
+- **stfu doesn't load:** add "with stfu" to your prompt. In Claude Code, run `/plugin` to check it's installed.
+- **The checker can't be found:** it's in the skill's folder, not your project. Use the full path.
+- **`--render` asks for Playwright:** run `pip install playwright`, then `playwright install chromium`.
+- **A new version doesn't arrive:** turn on auto-update, or run `claude plugin update stfu@stfu` and restart.
+
+## Help
+
+Report a bug or ask a question in [GitHub issues](https://github.com/tooaverage/stfu/issues).
 
 ## Testing the skill
 
