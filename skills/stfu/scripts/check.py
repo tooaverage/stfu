@@ -161,7 +161,9 @@ def title_caps(raw):
     def add(pos):
         line = raw.count("\n", 0, pos) + 1
         count[line] = count.get(line, 0) + 1
-    for m in re.finditer(r"([^{}]*)\{([^{}]*)\}", raw):
+    # A rule starts at the top of the file or right after a brace. Without that
+    # anchor the search retries from every character and big files take minutes.
+    for m in re.finditer(r"(?:^|(?<=[{}]))([^{}]*)\{([^{}]*)\}", raw):
         selector, body = m.group(1), m.group(2)
         t = re.search(r"text-transform\s*:\s*uppercase", body, flags=re.I)
         if t and (TITLE_SELECTOR.search(selector) or big_size(body)):
@@ -341,6 +343,8 @@ def take(argv, flag, has_value=True):
         return argv, None
     i = argv.index(flag)
     if has_value:
+        if i + 1 >= len(argv):
+            sys.exit(f"{flag} needs a value.")
         return argv[:i] + argv[i + 2:], argv[i + 1]
     return argv[:i] + argv[i + 1:], True
 
@@ -349,7 +353,10 @@ def main(argv):
     argv, target = take(argv, "--grade")
     argv, before = take(argv, "--before")
     argv, do_render = take(argv, "--render", has_value=False)
-    target = float(target) if target else None
+    try:
+        target = float(target) if target else None
+    except ValueError:
+        sys.exit(f"--grade needs a number, like --grade 8 (got {target}).")
     if not argv:
         print(__doc__)
         return 2
@@ -365,10 +372,18 @@ def main(argv):
         if path == "-":
             total += check("stdin", sys.stdin.read(), t, banned)
             continue
-        with open(path, encoding="utf-8") as f:
-            raw = f.read()
+        try:
+            # errors="replace" so one odd byte doesn't stop the whole check.
+            with open(path, encoding="utf-8", errors="replace") as f:
+                raw = f.read()
+        except OSError as e:
+            print(f"{path}: can't read it ({e.strerror}).")
+            total += 1
+            continue
         total += check(path, raw, t, banned, render(path) if do_render else None)
-    if do_render and before and argv[-1] != "-":
+    if before and not os.path.isfile(before):
+        print(f"{before}: can't find the --before file, so there's no before and after.")
+    elif do_render and before and argv[-1] != "-":
         was, now = render(before), render(argv[-1])
         print(f"before -> after: {len(words_of(was['text']))} -> {len(words_of(now['text']))} words on screen, "
               f"{was['height']} -> {now['height']}px tall")
