@@ -52,6 +52,14 @@ After: "That file's too big. The limit is 25 MB. Try a smaller file, or compress
 
 Why: it says what went wrong and how to fix it, with the real number.
 
+## Settings page
+
+Before: every section heading has a line under it. "Profile: You, in this workspace." "Members: Everyone here and the machines they've enrolled." "Delete workspace: Ask the team to permanently remove this workspace and its data."
+
+After: "Profile" and "Members" stand alone. "Delete workspace" keeps one line: "Removes this workspace and its data for good."
+
+Why: a teammate's feedback was "why do we need all these settings instructions". The headings already say what each section is. Only the delete line warns about something the reader needs to know first.
+
 ## Empty state
 
 Before: "It looks like you haven't created any projects yet! Get started by clicking the button below to create your very first project."

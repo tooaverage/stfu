@@ -10,7 +10,7 @@ Grade the copy once it's written. Each check is pass or fail, never a score, bec
 4. Numbers, names and dates are specific. No "many", "several" or "various".
 5. No sentence could be pasted onto another product's page unchanged.
 6. Every element is inside its word budget in SKILL.md (titles, subs, intros, notes, hints, buttons, tooltips, empty states, errors, paragraphs). Over budget is a fail, even by one word.
-7. Each element holds one idea. Buttons are a verb and an object. A sub says why or what happens next, not both.
+7. Each element holds one idea. Buttons are a verb and an object. A sub says why or what happens next, not both. A heading that names what's there has no sub, unless the sub warns about a consequence, cost or requirement.
 8. Anything with a shape is shown, not told: places on a map, numbers over time on a chart, scores in a colored grid, options in a table, steps numbered 1, 2, 3. A paragraph that could be one of these is a fail. Ordinary notes are sentences, not bullets.
 9. Sentences are whole and plain: contractions, "you", active voice. No fragments, no "Nov" mid-sentence, no idioms.
 10. Buttons and links say what happens, and nothing pushes with fake urgency.

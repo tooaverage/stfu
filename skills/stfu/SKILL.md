@@ -4,7 +4,7 @@ description: Writes and edits website and product copy so it's short, plain, vis
 license: MIT
 metadata:
   author: Jaycee Day
-  version: 0.11.2
+  version: 0.11.3
 ---
 
 # stfu
@@ -37,8 +37,8 @@ Every job ends with the checks in [references/evals.md](references/evals.md).
    | Element | Max |
    |---|---|
    | Title or headline | 8 words, up to 12 to keep the words people search for |
-   | Sub under a title | 1 sentence, 15 words |
-   | Section intro | 1 to 2 sentences, or none |
+   | Sub under a title | None, or 1 sentence of 15 words |
+   | Section intro | None, or 1 to 2 sentences |
    | Card, row or table note | 12 words |
    | Hint or helper text | 10 words |
    | Button | 3 words |
@@ -49,7 +49,7 @@ Every job ends with the checks in [references/evals.md](references/evals.md).
 
    The budget wins. When a fact doesn't fit, give it its own element (a table row, a note, a "More" toggle), or cut it if the page says it somewhere else. Don't stretch the element to hold it.
 
-   One idea per element. A title says what to do or what you get, and on a task screen it starts with a verb ("Name your workspace"). A sub says why, or what happens next, not both. A button is a verb and an object ("Connect GitHub", not "Continue"). Use words a 12-year-old knows, unless the right word is harder ("mortgage"), and write whole sentences: fragments and "Nov" mid-sentence are harder to read, not easier.
+   One idea per element. A title says what to do or what you get, and on a task screen it starts with a verb ("Name your workspace"). A sub says why, or what happens next, not both. A title that names what's there (Profile, Billing, Members) needs no sub at all. Add one only when the reader would act differently without it: a consequence, a cost or a requirement ("Deleting it removes every project for good"). What a section is, holds or does isn't a reason, and it isn't a fact you have to keep. A button is a verb and an object ("Connect GitHub", not "Continue"). Use words a 12-year-old knows, unless the right word is harder ("mortgage"), and write whole sentences: fragments and "Nov" mid-sentence are harder to read, not easier.
 4. **Visual first.** People take in a picture faster than a paragraph, so when content has a shape, show it, and use the room the cut words free up:
    - Places, or a route between them: a map with a labeled point for each place. A simple drawn map is fine, marked "not to scale".
    - Numbers that change over time: a chart.
