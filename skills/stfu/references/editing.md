@@ -1,6 +1,6 @@
 # Editing or auditing an existing page
 
-Starting from existing text makes you cautious: you keep its structure and nudge the sentences. In tests that cut only 4 to 7% of a page. Trimming a long draft keeps the structure that made it long, so write the short version first.
+Starting from existing text makes you cautious: you keep its structure and nudge the sentences, which barely makes the page shorter. Trimming a long draft keeps the structure that made it long, so write the short version first.
 
 ## Edit
 
