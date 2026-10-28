@@ -15,7 +15,7 @@ Grade the copy once it's written. Each check is pass or fail, never a score, bec
 9. Sentences are whole and plain: contractions, "you", active voice. No fragments, no "Nov" mid-sentence, no idioms.
 10. Buttons and links say what happens, and nothing pushes with fake urgency.
 11. None of the AI tells listed in SKILL.md.
-12. Images have alt text, errors say how to fix them, and form fields have labels.
+12. Images have alt text, errors say how to fix them, and form fields have labels. Empty states say what will show up there, not just that it's empty.
 
 ## Editing an existing page
 

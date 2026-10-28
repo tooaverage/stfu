@@ -64,9 +64,9 @@ Why: a teammate's feedback was "why do we need all these settings instructions".
 
 Before: "It looks like you haven't created any projects yet! Get started by clicking the button below to create your very first project."
 
-After: "No projects yet." with a "New project" button.
+After: "No projects yet. Add one to track its hours and send invoices from it." with a "New project" button.
 
-Why: the button says what to do, so the sentence about the button can go.
+Why: the button already says how to start, so the sentence about the button can go. A bare "No projects yet" is short but not friendly: it doesn't say what a project is for or why to make one.
 
 ## Hype paragraph
 

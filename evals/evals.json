@@ -4,7 +4,7 @@
     {
       "id": 1,
       "name": "landing-page-from-brief",
-      "prompt": "make a landing page for gowhereandwhen, a site that tells you the best time to visit a country. Make the page for Japan. It should have:\n  - that it's best to go late March to May or November, avoid August to October\n  - a weather score\n  - month by month how the weather is\n  - show different japanese cities best time to go\n  - a suggested 2 week route\n  - best time for cherry blossom, autumn leaves, skiing and smaller crowds\n  - how to book a shinkansen ticket, for a first-time visitor\nSave it as index.html.",
+      "prompt": "make a landing page for seasonly, a site that tells you the best time to visit a country. Make the page for Japan. It should have:\n  - that it's best to go late March to May or November, avoid August to October\n  - a weather score\n  - month by month how the weather is\n  - show different japanese cities best time to go\n  - a suggested 2 week route\n  - best time for cherry blossom, autumn leaves, skiing and smaller crowds\n  - how to book a shinkansen ticket, for a first-time visitor\nSave it as index.html.",
       "expected_output": "A single-page site that covers every bullet in the brief, leads with the best months, uses tables and numbered steps where content has that shape, and passes skills/stfu/references/evals.md.",
       "files": []
     },
