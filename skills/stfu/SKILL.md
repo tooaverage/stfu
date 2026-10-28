@@ -55,10 +55,10 @@ Every job ends with the checks in [references/evals.md](references/evals.md).
    - Numbers that change over time: a chart.
    - Scores across months or categories: a colored grid.
    - Options compared on the same points: a table.
-   - Steps someone follows in order: a numbered list (1, 2, 3) or a diagram.
+   - Steps someone does while they read, like setup or install, 3 or more of them: numbered steps (1, 2, 3). Two steps, or a process they only read about, stays a sentence.
    - A status: a badge with a text label.
 
-   Pick the most visual form that stays readable. Every visual keeps its facts as text (labels on the points, bars and cells), so screen readers and search still get them. Ordinary notes stay sentences, because a page of bullets reads like a slide deck.
+   Pick the most visual form that stays readable. Every visual keeps its facts as text (labels on the points, bars and cells), so screen readers and search still get them. Everything else stays sentences. A list is the exception, not the default: use one only when people scan the items instead of reading them, like what a plan includes. A page of bullets reads like a slide deck.
 5. **Be specific.** Real numbers, names and dates instead of "many" or "several". If a sentence could be pasted onto another product's page unchanged, it isn't saying anything: cut it or make it specific.
 6. **Sound like a person.** Contractions, "you", active voice. Plain words instead of idioms, since "move the needle" means nothing to a lot of readers. Reuse the terms on nearby screens and sections, and don't invent new metaphors.
 7. **Invite, don't push.** Buttons and links say what happens ("See pricing", not "Learn more"). No fake urgency.
