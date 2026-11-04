@@ -100,8 +100,6 @@ Report a bug or ask a question in [GitHub issues](https://github.com/tooaverage/
 
 [evals/evals.json](evals/evals.json) has test prompts in skill-creator's format, and [evals/triggers.json](evals/triggers.json) has prompts that should and shouldn't load the skill. Run them with and without stfu and grade both against the evals list.
 
-`evals/ui-microcopy` and `evals/landing-page` are cases for `claude plugin eval`, which runs each one with and without the plugin and scores both.
-
 ## For chat
 
 Want your AI to talk to you this way too? See [prompts/conversation.md](prompts/conversation.md).
