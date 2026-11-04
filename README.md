@@ -2,7 +2,7 @@
 
 **S**hort, **T**o-the-point, **F**riendly, **U**seful.
 
-A skill that makes AI write copy people can read: website pages, product UI, onboarding, docs, errors and empty states.
+A skill that makes AI write copy people can read: website pages, product UI, onboarding, docs, errors and empty states. See it work on real pages at [tooaveragetools.com/stfu](https://tooaveragetools.com/stfu/?utm_source=stfu-readme&utm_medium=readme).
 
 | Rule | Why |
 |---|---|
@@ -100,9 +100,15 @@ Report a bug or ask a question in [GitHub issues](https://github.com/tooaverage/
 
 [evals/evals.json](evals/evals.json) has test prompts in skill-creator's format, and [evals/triggers.json](evals/triggers.json) has prompts that should and shouldn't load the skill. Run them with and without stfu and grade both against the evals list.
 
+`evals/ui-microcopy` and `evals/landing-page` are cases for `claude plugin eval`, which runs each one with and without the plugin and scores both.
+
 ## For chat
 
 Want your AI to talk to you this way too? See [prompts/conversation.md](prompts/conversation.md).
+
+## Made by
+
+Jaycee Day. Find more free tools at [tooaveragetools.com](https://tooaveragetools.com/?utm_source=stfu-readme&utm_medium=readme).
 
 ## License
 

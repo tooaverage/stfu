@@ -1,10 +1,10 @@
 {
   "name": "stfu",
   "displayName": "stfu",
-  "version": "0.11.9",
+  "version": "0.11.10",
   "description": "Short, To-the-point, Friendly, Useful. Makes copy that ships in a website or product short, plain, grade 6 and free of AI tells.",
-  "author": { "name": "Jaycee Day" },
-  "homepage": "https://tooaveragetools.com/stfu",
+  "author": { "name": "Jaycee Day", "url": "https://tooaveragetools.com/?utm_source=claude-directory&utm_medium=plugin-author" },
+  "homepage": "https://tooaveragetools.com/stfu/?utm_source=claude-directory&utm_medium=plugin-listing",
   "repository": "https://github.com/tooaverage/stfu",
   "privacyPolicyUrl": "https://tooaveragetools.com/stfu/privacy/",
   "documentationUrl": "https://github.com/tooaverage/stfu#readme",
