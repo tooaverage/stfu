@@ -201,6 +201,7 @@ def markup_flags(name, raw):
     return flags
 
 
+TEMPLATE_CODE = re.compile(r"[$][{][^}]*[}]")  # the code part of a JavaScript template string
 ABBREVIATION = re.compile(r"\b(?:Mt|St|Dr|Mr|Mrs|Ms|Jr|Sr|No|vs|etc|approx|e\.g|i\.e)\.$", re.I)
 
 
@@ -209,7 +210,7 @@ def short_sentences(text):
     Lines with numbers are skipped: "The limit is 25 MB." is a fact, not a hook."""
     for part in re.split(r"<[^>]+>|\t|\|", text):  # each element, table cell or column on its own
         part = re.sub(r"^[\s\-*>\"'“”‘’(]*(?:\d+[.)]\s+)?", "", part).strip(" \"'“”‘’)")
-        # Skip numbers, and the … that stands in for ${...} in JavaScript templates.
+        # Skip numbers, and the … that stands in for code in JavaScript template strings.
         if not part or re.search(r"[\d…]", part):
             continue
         sents = []
@@ -261,8 +262,8 @@ def source_prose(raw):
         if in_code:
             continue
         if i in in_script:
-            # Strings only, and not the ${...} code inside template strings.
-            text = " ".join(re.sub(r"\$\{[^}]*\}", "…", g) for m in STRING.finditer(line) for g in m.groups() if g)
+            # Strings only, and not the code inside template strings.
+            text = " ".join(TEMPLATE_CODE.sub("…", g) for m in STRING.finditer(line) for g in m.groups() if g)
         else:
             text = re.sub(r"`[^`]*`", " ", line)
         if text.strip():
