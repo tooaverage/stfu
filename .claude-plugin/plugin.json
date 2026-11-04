@@ -1,12 +1,15 @@
 {
   "name": "stfu",
   "displayName": "stfu",
-  "version": "0.11.8",
+  "version": "0.11.9",
   "description": "Short, To-the-point, Friendly, Useful. Makes copy that ships in a website or product short, plain, grade 6 and free of AI tells.",
   "author": { "name": "Jaycee Day" },
   "homepage": "https://tooaveragetools.com/stfu",
   "repository": "https://github.com/tooaverage/stfu",
-  "icon": ".claude-plugin/icon.png",
+  "privacyPolicyUrl": "https://tooaveragetools.com/stfu/privacy/",
+  "documentationUrl": "https://github.com/tooaverage/stfu#readme",
+  "supportUrl": "https://github.com/tooaverage/stfu/issues",
+  "termsOfServiceUrl": "https://github.com/tooaverage/stfu/blob/main/LICENSE",
   "license": "MIT",
   "keywords": ["copywriting", "ux-writing", "plain-language", "readability"]
 }

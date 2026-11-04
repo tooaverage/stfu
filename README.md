@@ -83,6 +83,8 @@ stfu doesn't collect data or send anything anywhere.
 - `check.py` reads the files you name and prints what it flags. It never changes a file.
 - With `--render`, it opens the page in a browser on your computer, which loads whatever the page links to.
 
+The [privacy policy](https://tooaveragetools.com/stfu/privacy/) has the details.
+
 ## Troubleshooting
 
 - **stfu doesn't load:** add "with stfu" to your prompt. In Claude Code, run `/plugin` to check it's installed.
@@ -92,7 +94,7 @@ stfu doesn't collect data or send anything anywhere.
 
 ## Help
 
-Report a bug or ask a question in [GitHub issues](https://github.com/tooaverage/stfu/issues).
+Report a bug or ask a question in [GitHub issues](https://github.com/tooaverage/stfu/issues). For a security issue, email hi@jayceeday.com instead, as [SECURITY.md](SECURITY.md) says.
 
 ## Testing the skill
 
