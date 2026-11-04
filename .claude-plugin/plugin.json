@@ -7,6 +7,9 @@
   "homepage": "https://tooaveragetools.com/stfu",
   "repository": "https://github.com/tooaverage/stfu",
   "privacyPolicyUrl": "https://tooaveragetools.com/stfu/privacy/",
+  "documentationUrl": "https://github.com/tooaverage/stfu#readme",
+  "supportUrl": "https://github.com/tooaverage/stfu/issues",
+  "termsOfServiceUrl": "https://github.com/tooaverage/stfu/blob/main/LICENSE",
   "license": "MIT",
   "keywords": ["copywriting", "ux-writing", "plain-language", "readability"]
 }
