@@ -16,3 +16,6 @@ coverage/
 *.log
 evals/results.md
 evals/results.html
+evals/results/
+evals/audit-only/
+evals/edit-page/
