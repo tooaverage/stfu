@@ -13,14 +13,14 @@
       "name": "edit-existing-page",
       "prompt": "Use stfu on index.html.",
       "expected_output": "The same page, same look, shorter on screen, every fact still there, and passes the editing checks in skills/stfu/references/evals.md.",
-      "files": ["fixtures/japan-no-stfu.html"]
+      "files": ["fixtures/japan-no-stfu.txt"]
     },
     {
       "id": 3,
       "name": "audit-only",
       "prompt": "Audit the copy on index.html with stfu.",
       "expected_output": "No change to the file. A numbered list of at most 10 findings, biggest first, each with where, what's wrong and the exact fix, then a question about which to apply.",
-      "files": ["fixtures/japan-no-stfu.html"]
+      "files": ["fixtures/japan-no-stfu.txt"]
     },
     {
       "id": 4,

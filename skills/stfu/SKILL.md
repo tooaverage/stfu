@@ -4,7 +4,7 @@ description: Writes and edits website and product copy so it's short, plain, vis
 license: MIT
 metadata:
   author: Jaycee Day
-  version: 0.11.11
+  version: 0.11.12
 ---
 
 # stfu
@@ -87,7 +87,7 @@ These rules are about words, not the look. A page without eyebrows or colored wo
 ## Check your work
 
 1. Cut pass: delete every sentence the page works without, then every word each sentence works without. Count the words in each element against the budget.
-2. Run the checker from this skill's folder: `python3 <skill folder>/scripts/check.py <file>`. It catches the mechanical tells (dashes, caps, emoji, hype words, vague links, missing alt text), very long sentences, and strings of very short ones ("Same meaning. Fewer words."). It can be wrong about literal uses, so judge each flag.
+2. Check the mechanical tells by hand. If you have a search tool (Grep), search the file for each one instead of trusting a read-through: em dashes and en dashes, a dash used as a pause, small text in all caps (`text-transform: uppercase`, an `uppercase` class, or words typed in caps), emoji, eyebrow labels (`eyebrow`, `kicker`, `overline`, `section-label`), zero-padded step numbers (01, 02, 03), vague link text ("click here", "learn more", "read more", "here"), images with no alt text, and hype words (leverage, seamless, effortless, unlock, empower, elevate, supercharge, revolutionary, robust, cutting-edge, delve, utilize, simply, easily, in seconds, honestly, genuinely, world-class, best-in-class, deep dive). Then count the words in your three longest sentences: split any over 25 words. Look for strings of very short sentences ("Same meaning. Fewer words.") and join them. A literal use can be fine, so judge each hit.
 3. Read [references/evals.md](references/evals.md) and answer every check, pass or fail. If you can start a subagent (the Task or Agent tool), give a fresh one only the page, the must-cover list and evals.md, so it grades what a stranger sees. Fix what fails and grade again, at most 3 rounds.
 4. If you can take a screenshot or open the page in a browser, look at it before you hand it over. A changed tag or class can pick up styles meant for something else.
 5. Hand it over. New copy: show it with the word count beside each element, then at most two lines on anything folded away or left out and any fact to confirm. Edits: list each changed element as in [references/editing.md](references/editing.md). Start with the first change, not a summary of what you did or which checks ran.
@@ -98,7 +98,7 @@ When someone edits your copy or says a line sounds off, the edit is the data:
 
 1. Compare their version with yours word by word, and say in 1 to 3 lines what changed. Don't defend the original.
 2. A cut is final. Never bring a cut line back in other words. If it solved a real problem, name the problem and offer a different fix.
-3. When the same kind of change happens twice, add one rule to `.stfu.md` with the date and their exact words. Write word swaps as `Say "sign in", not "log in"` so the checker catches them.
+3. When the same kind of change happens twice, add one rule to `.stfu.md` with the date and their exact words. Write word swaps as `Say "sign in", not "log in"` so they are easy to search for.
 4. Fix the other places the rule applies.
 
 ## Examples
@@ -111,6 +111,5 @@ After: "Send invoices and track who's paid."
 
 ## Troubleshooting
 
-- **The checker can't be found:** it's in this skill's folder, not the project. Use the full path.
-- **The page builds its text with JavaScript:** add `--render` to the checker to read the page as a browser shows it (needs Playwright). Otherwise check the text in the script by hand.
+- **The page builds its text with JavaScript:** check the text in the script by hand.
 - **Facts on the page contradict each other:** don't pick one. Flag it in your hand-over line.
