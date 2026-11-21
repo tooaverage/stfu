@@ -68,6 +68,18 @@ After: "No projects yet. Add one to track its hours and send invoices from it." 
 
 Why: the button already says how to start, so the sentence about the button can go. A bare "No projects yet" is short but not friendly: it doesn't say what a project is for or why to make one.
 
+## Choppy sentences
+
+Before: "We guessed. Change it if it's wrong."
+
+After: "We picked our best guess, but you can change it."
+
+Before: "They stay on this phone. On File has no account or server."
+
+After: "They stay on this phone, with no account or server."
+
+Why: two short sentences in a row make the reader stop twice and work out how they connect. One sentence with "but", "so" or "with" says how.
+
 ## Hype paragraph
 
 Before: "In today's fast-paced world, our robust platform empowers teams to seamlessly streamline their workflow and unlock their full potential."
