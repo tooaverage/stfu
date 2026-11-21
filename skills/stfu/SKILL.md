@@ -4,7 +4,7 @@ description: Writes and edits website and product copy so it's short, plain, vis
 license: MIT
 metadata:
   author: Jaycee Day
-  version: 0.11.12
+  version: 0.11.13
 ---
 
 # stfu
@@ -87,7 +87,7 @@ These rules are about words, not the look. A page without eyebrows or colored wo
 ## Check your work
 
 1. Cut pass: delete every sentence the page works without, then every word each sentence works without. Count the words in each element against the budget.
-2. Check the mechanical tells by hand. If you have a search tool (Grep), search the file for each one instead of trusting a read-through: em dashes and en dashes, a dash used as a pause, small text in all caps (`text-transform: uppercase`, an `uppercase` class, or words typed in caps), emoji, eyebrow labels (`eyebrow`, `kicker`, `overline`, `section-label`), zero-padded step numbers (01, 02, 03), vague link text ("click here", "learn more", "read more", "here"), images with no alt text, and hype words (leverage, seamless, effortless, unlock, empower, elevate, supercharge, revolutionary, robust, cutting-edge, delve, utilize, simply, easily, in seconds, honestly, genuinely, world-class, best-in-class, deep dive). Then count the words in your three longest sentences: split any over 25 words. Look for strings of very short sentences ("Same meaning. Fewer words.") and join them. A literal use can be fine, so judge each hit.
+2. Check the mechanical tells by hand. If you have a search tool (Grep), search the file for each one instead of trusting a read-through: em dashes and en dashes, a dash used as a pause, small text in all caps (`text-transform: uppercase`, an `uppercase` class, or words typed in caps), emoji, eyebrow labels (`eyebrow`, `kicker`, `overline`, `section-label`), zero-padded step numbers (01, 02, 03), vague link text ("click here", "learn more", "read more", "here"), images with no alt text, and hype words (leverage, seamless, effortless, unlock, empower, elevate, supercharge, revolutionary, robust, cutting-edge, delve, utilize, simply, easily, in seconds, honestly, genuinely, world-class, best-in-class, deep dive). Then count the words in your three longest sentences: split any over 25 words. Then find every element with two or more sentences and count the words in each: two sentences in a row of 8 words or fewer read as choppy, so join them into one ("Screenshots hide the time. Your PDF shows it on every message." becomes "Screenshots hide the time, but your PDF shows it on every message."). A headline with its sub, and separate list items, don't count. A literal use can be fine, so judge each hit.
 3. Read [references/evals.md](references/evals.md) and answer every check, pass or fail. If you can start a subagent (the Task or Agent tool), give a fresh one only the page, the must-cover list and evals.md, so it grades what a stranger sees. Fix what fails and grade again, at most 3 rounds.
 4. If you can take a screenshot or open the page in a browser, look at it before you hand it over. A changed tag or class can pick up styles meant for something else.
 5. Hand it over. New copy: show it with the word count beside each element, then at most two lines on anything folded away or left out and any fact to confirm. Edits: list each changed element as in [references/editing.md](references/editing.md). Start with the first change, not a summary of what you did or which checks ran.
