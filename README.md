@@ -52,15 +52,6 @@ To get new versions on their own, turn on auto-update: run `/plugin`, open **Mar
 
 For Claude.ai, zip the `skills/stfu` folder and upload it as a skill in Settings.
 
-## Check your copy
-
-```
-python3 skills/stfu/scripts/check.py page.html
-python3 skills/stfu/scripts/check.py --render --before old.html page.html
-```
-
-The first catches the mechanical tells. `--render` reads the page the way a browser shows it (needs Playwright) and prints words on screen and page height, before and after. It exits with 1 if anything is flagged, so it works in CI.
-
 ## House rules
 
 Add a `.stfu.md` to your project root to change the defaults.
@@ -80,16 +71,12 @@ grade: 8
 stfu doesn't collect data or send anything anywhere.
 
 - The skill is Markdown that tells your AI how to write.
-- `check.py` reads the files you name and prints what it flags. It never changes a file.
-- With `--render`, it opens the page in a browser on your computer, which loads whatever the page links to.
 
 The [privacy policy](https://tooaveragetools.com/stfu/privacy/) has the details.
 
 ## Troubleshooting
 
 - **stfu doesn't load:** add "with stfu" to your prompt. In Claude Code, run `/plugin` to check it's installed.
-- **The checker can't be found:** it's in the skill's folder, not your project. Use the full path.
-- **`--render` asks for Playwright:** run `pip install playwright`, then `playwright install chromium`.
 - **A new version doesn't arrive:** turn on auto-update, or run `claude plugin update stfu@stfu` and restart.
 
 ## Help

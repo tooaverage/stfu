@@ -10,7 +10,7 @@ Starting from existing text makes you cautious: you keep its structure and nudge
 4. Delete before you add: repeats that do the same job, intros that restate the heading, subs under headings that already name what's there (a settings page needs "Members", not "Members: everyone in this workspace"), labels nobody needs. Keep a warning where the reader makes the choice, even if the fact is also listed elsewhere. Add only what a reader is missing.
 5. Inside a section you can change the form (setup steps to numbered steps, options to a table), built from styles the page already has. Detail that only some readers need can fold under a "More..." toggle, so it stays on the page without making it longer. Leave the page layout, section order and look alone unless asked to rebuild. Before you change an element's tag or class, check the page's CSS for rules on the new one: a page that styles every `nav` as its sidebar turns a breadcrumb you wrap in `nav` into a dark bar.
 6. Expect the page to come out about a third shorter on screen. If it doesn't, look again for repeats and for detail to fold before you hand it over. Never cut a fact to hit a number.
-7. Check your work as SKILL.md describes, including the editing checks in evals.md. Run `check.py --render --before <copy> <page>` to see the change on screen.
+7. Check your work as SKILL.md describes, including the editing checks in evals.md. Count the visible words before and after to see the change.
 8. Hand it over element by element, grouped by section, so it's quick to review:
 
    ```

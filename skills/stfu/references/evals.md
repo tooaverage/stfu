@@ -20,7 +20,7 @@ Grade the copy once it's written. Each check is pass or fail, never a score, bec
 ## Editing an existing page
 
 13. Same fonts, colors and style as before.
-14. Shorter on screen than before (`check.py --render --before <copy> <page>` shows both).
+14. Shorter on screen than before (count the visible words before and after).
 15. The search words are still in the title, H1 and first paragraph.
 
 ## When to stop
